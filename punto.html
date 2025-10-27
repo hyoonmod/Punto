@@ -60,6 +60,24 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 10px rgba(0,0,0,0.15);
         }
+        
+        button#back-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            border: none;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow);
+        }
+
+        button#back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
 
         #main-container {
             display: flex;
@@ -286,6 +304,43 @@
             }
         }
 
+
+        /* ---- Setup Modal ---- */
+        #setup-modal {
+        position: fixed; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.4);
+        z-index: 9999;
+        }
+
+        .setup-card {
+        width: min(640px, 92vw);
+        background: #fff; border-radius: var(--border-radius);
+        box-shadow: var(--shadow); padding: 18px 20px;
+        }
+
+        .setup-row {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;
+        }
+
+        .setup-row label { font-weight: 600; color: #34495e; }
+        .setup-row select, .setup-row input {
+        width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d0d7de;
+        font-family: inherit;
+        }
+
+        #setup-actions {
+        display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px;
+        }
+        #begin-game-btn, #randomize-btn {
+        padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer;
+        font-weight: 600; box-shadow: var(--shadow);
+        }
+        #begin-game-btn { background: linear-gradient(45deg, #2ecc71, #27ae60); color: #fff; }
+        #randomize-btn { background: #ecf0f1; color: #2c3e50; }
+        .hidden { display: none !important; }
+
+
     </style>
 </head>
 <body>
@@ -295,10 +350,38 @@
     <div id="center-panel">
         <div id="game-status">Selamat datang! Klik tombol di bawah untuk bermain.</div>
         <div id="game-controls">
-            <button id="start-button">Mulai Permainan</button>
+            <button id="start-button">Restart Game</button>
+            <button id="back-button">Return to Menu</button>
         </div>
         <div id="board-container"></div>
     </div>
+
+    <!-- STARTING MENU -->
+    <div id="setup-modal">
+    <div class="setup-card">
+        <h2 style="margin:0 0 6px 0;color:#34495e">Game Setup</h2>
+        <p style="margin:0 0 14px 0;color:#5d6d7e">Pilih jumlah AI dan model AI yang akan bermain.</p>
+
+        <div class="setup-row">
+        <label for="ai-count">Jumlah AI</label>
+        <select id="ai-count">
+            <option value="1">1 AI</option>
+            <option value="2">2 AI</option>
+            <option value="3">3 AI</option>
+            <option value="4" selected>4 AI</option>
+        </select>
+        </div>
+
+        <!-- AI Slots -->
+        <div id="ai-slots" style="margin-top:12px"></div>
+
+        <div id="setup-actions">
+        <button id="randomize-btn" type="button">Randomize</button>
+        <button id="begin-game-btn" type="button">Mulai Permainan</button>
+        </div>
+    </div>
+    </div>
+
     
     <div id="main-container">
         <div class="players-column" id="players-col-1"></div>
@@ -310,18 +393,24 @@
 // KONFIGURASI DAN STATUS PERMAINAN
 // ===================================
 const BOARD_SIZE = 9;
-const PLAYER_COUNT = 0;
-const AI_COUNT = 4;
-const TOTAL_PLAYERS = PLAYER_COUNT + AI_COUNT;
 const WIN_LENGTH = 4;
 const INITIAL_HAND_SIZE = 3;
 
-const PLAYER_CONFIG = [
-    { name: 'AI Forker', type: 'ai', colorClass: 'player-0', aiStrategy: 'forker' },
-    { name: 'AI Defensive', type: 'ai', colorClass: 'player-1', aiStrategy: 'defensive' },
-    { name: 'AI Offensive', type: 'ai', colorClass: 'player-2', aiStrategy: 'offensive' },
-    { name: 'AI Greedy', type: 'ai', colorClass: 'player-ai', aiStrategy: 'greedy' },
+// Dynamic player config from setup menu
+let PLAYER_CONFIG = [];
+let TOTAL_PLAYERS = 0;
+
+// Available AI strategies
+const AI_MODELS = [
+  { key: 'forker', label: 'Forker' },
+  { key: 'defensive', label: 'Defensive' },
+  { key: 'offensive', label: 'Offensive' },
+  { key: 'greedy', label: 'Greedy' },
 ];
+
+// Color classes to cycle through for up to 4 AIs
+const COLOR_CLASSES = ['player-0', 'player-1', 'player-2', 'player-ai'];
+
 
 let gameState = {};
 let selectedPlayerInfo = { id: null, cardIndex: null, cardValue: null };
@@ -334,8 +423,125 @@ const playersCol1 = document.getElementById('players-col-1');
 const playersCol2 = document.getElementById('players-col-2');
 const gameStatusEl = document.getElementById('game-status');
 const startButton = document.getElementById('start-button');
+const backButton = document.getElementById('back-button');
 
 startButton.addEventListener('click', initializeGame);
+
+backButton.addEventListener('click', () => {
+  //Stop any running game before returning to menu
+  if (gameState) {
+    gameState.isGameOver = true; // Prevents AI or player moves
+  }
+
+  //Cancel any AI timeouts (like from triggerAIMove)
+  if (typeof aiMoveTimeout !== 'undefined') {
+    clearTimeout(aiMoveTimeout);
+  }
+
+  //Also clear any queued timeouts in the event loop
+  const highestTimeoutId = window.setTimeout(() => {});
+  for (let i = 0; i <= highestTimeoutId; i++) {
+    window.clearTimeout(i);
+  }
+
+  //Reset game display
+  boardContainer.innerHTML = '';
+  playersCol1.innerHTML = '';
+  playersCol2.innerHTML = '';
+  gameStatusEl.textContent = 'Silakan pilih jumlah dan jenis AI untuk memulai permainan.';
+
+  //Show setup screen again
+  setupModal.classList.remove('hidden');
+});
+
+
+
+
+
+// ==== Setup Modal Elements ====
+const setupModal = document.getElementById('setup-modal');
+const aiCountSel = document.getElementById('ai-count');
+const aiSlotsContainer = document.getElementById('ai-slots');
+const beginGameBtn = document.getElementById('begin-game-btn');
+const randomizeBtn = document.getElementById('randomize-btn');
+
+// Build AI slot rows according to selected count
+function renderAISlots() {
+  const count = parseInt(aiCountSel.value, 10);
+  aiSlotsContainer.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const row = document.createElement('div');
+    row.className = 'setup-row';
+
+    // Name
+    const nameWrap = document.createElement('div');
+    const nameLabel = document.createElement('label');
+    nameLabel.textContent = `AI ${i+1} Name`;
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.value = `AI ${i+1}`;
+    nameInput.id = `ai-name-${i}`;
+    nameWrap.appendChild(nameLabel);
+    nameWrap.appendChild(nameInput);
+
+    // Strategy
+    const stratWrap = document.createElement('div');
+    const stratLabel = document.createElement('label');
+    stratLabel.textContent = `AI ${i+1} Model`;
+    const stratSelect = document.createElement('select');
+    stratSelect.id = `ai-model-${i}`;
+    AI_MODELS.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.key; opt.textContent = m.label;
+      stratSelect.appendChild(opt);
+    });
+    // Give each slot a different default for variety
+    stratSelect.selectedIndex = i % AI_MODELS.length;
+
+    stratWrap.appendChild(stratLabel);
+    stratWrap.appendChild(stratSelect);
+
+    row.appendChild(nameWrap);
+    row.appendChild(stratWrap);
+    aiSlotsContainer.appendChild(row);
+  }
+}
+
+aiCountSel.addEventListener('change', renderAISlots);
+randomizeBtn.addEventListener('click', () => {
+  const count = parseInt(aiCountSel.value, 10);
+  for (let i = 0; i < count; i++) {
+    document.getElementById(`ai-name-${i}`).value = `AI ${i+1}`;
+    const sel = document.getElementById(`ai-model-${i}`);
+    sel.selectedIndex = Math.floor(Math.random() * AI_MODELS.length);
+  }
+});
+
+// Use the menu's selections to build PLAYER_CONFIG and start
+beginGameBtn.addEventListener('click', () => {
+  const count = parseInt(aiCountSel.value, 10);
+  const cfg = [];
+  for (let i = 0; i < count; i++) {
+    const name = document.getElementById(`ai-name-${i}`).value.trim() || `AI ${i+1}`;
+    const model = document.getElementById(`ai-model-${i}`).value;
+    cfg.push({
+      name: `${name} (${AI_MODELS.find(m => m.key === model).label})`,
+      type: 'ai',
+      colorClass: COLOR_CLASSES[i % COLOR_CLASSES.length],
+      aiStrategy: model,
+    });
+  }
+  PLAYER_CONFIG = cfg;
+  TOTAL_PLAYERS = PLAYER_CONFIG.length;
+
+  // Hide setup modal, update status, and init game
+  setupModal.classList.add('hidden');
+  startButton.click(); // reuse your existing handler to initializeGame()
+});
+
+// Build initial slots on load
+renderAISlots();
+
 
 // ===================================
 // FUNGSI UTAMA PERMAINAN
