@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto AI Tournament (20 Rounds)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --p1-color: #e74c3c;
+            --p2-color: #2ecc71;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #e9eef2;
+            color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        #tournament-info {
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        #tournament-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        #main-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .players-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 250px;
+        }
+
+        .player-panel {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background-color: #fff;
+            box-shadow: var(--shadow);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .player-panel.active {
+            border-color: #007bff;
+            transform: scale(1.05);
+        }
+
+        .player-header {
+            font-weight: 600;
+            font-size: 1.1em;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .player-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .player-score {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: #27ae60;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+            border: 1px solid #27ae60;
+        }
+
+        .player-hand {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            min-height: 50px;
+        }
+
+        .card {
+            width: 35px;
+            height: 50px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 18px;
+            user-select: none;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-back {
+            background: repeating-linear-gradient(45deg, #7f8c8d, #7f8c8d 5px, #95a5a6 5px, #95a5a6 10px);
+        }
+
+        .player-0-indicator,
+        .player-0-bg {
+            background-color: var(--p1-color);
+            color: white;
+        }
+
+        .player-1-indicator,
+        .player-1-bg {
+            background-color: var(--p2-color);
+            color: white;
+        }
+
+        #center-panel {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #game-status {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #34495e;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        #board-container {
+            display: grid;
+            grid-template-columns: repeat(9, 40px);
+            grid-template-rows: repeat(9, 40px);
+            gap: 3px;
+            background-color: #bdc3c7;
+            padding: 5px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cell.center-point {
+            background-color: #e8f6f3;
+            border: 2px solid #27ae60;
+        }
+
+        .cell .card-on-board {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        #results-table {
+            margin-top: 30px;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        #results-table th,
+        #results-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        #results-table th {
+            background-color: #f2f2f2;
+        }
+
+        .win-row {
+            background-color: #d4edda;
+        }
+
+        .lose-row {
+            background-color: #f8d7da;
+        }
+
+        .draw-row {
+            background-color: #fff3cd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Punto AI Tournament</h1>
+
+    <div id="tournament-info">
+        <h2 id="round-display">Round 0 / 20</h2>
+
+        <div style="margin-bottom: 15px; display: flex; gap: 20px; justify-content: center;">
+            <div>
+                <label for="ai1-strategy">AI 1 Strategy:</label>
+                <select id="ai1-strategy">
+                    <option value="offensive">Offensive</option>
+                    <option value="defensive">Defensive</option>
+                    <option value="greedy">Greedy</option>
+                    <option value="forker">Forker</option>
+                </select>
+            </div>
+            <div>
+                <label for="ai2-strategy">AI 2 Strategy:</label>
+                <select id="ai2-strategy">
+                    <option value="offensive">Offensive</option>
+                    <option value="defensive">Defensive</option>
+                    <option value="greedy">Greedy</option>
+                    <option value="forker">Forker</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="tournament-stats">
+            <span id="ai1-stats">AI 1 Wins: 0 (0%)</span>
+            <span id="ai2-stats">AI 2 Wins: 0 (0%)</span>
+            <span id="draw-stats">Draws: 0</span>
+        </div>
+        <button id="start-btn" style="margin-top:10px; padding:10px 20px; cursor:pointer; font-weight:bold;">Start
+            Tournament</button>
+    </div>
+
+    <div id="main-container">
+        <div class="players-column" id="players-col-1"></div>
+
+        <div id="center-panel">
+            <div id="game-status">Ready...</div>
+            <div id="board-container"></div>
+        </div>
+
+        <div class="players-column" id="players-col-2"></div>
+    </div>
+
+    <table id="results-table">
+        <thead>
+            <tr>
+                <th>Round</th>
+                <th>AI 1 Set</th>
+                <th>AI 2 Set</th>
+                <th>Winner</th>
+                <th>Score (AI1 - AI2)</th>
+            </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+    </table>
+
+    <script>
+        // ===================================
+        // KONFIGURASI
+        // ===================================
+        const BOARD_SIZE = 9;
+        const WIN_LENGTH = 4;
+        const INITIAL_HAND_SIZE = 3;
+        const TOTAL_ROUNDS = 20;
+        const AI_DELAY = 10; // ms (Fast!)
+
+        // Generate 20 fixed random decks
+        const CARD_SETS = [];
+        function generateCardSets() {
+            for (let s = 0; s < 20; s++) {
+                const deck = [];
+                for (let i = 1; i <= 9; i++) { deck.push(i, i); } // 18 cards
+                // Shuffle
+                for (let i = deck.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [deck[i], deck[j]] = [deck[j], deck[i]];
+                }
+                CARD_SETS.push(deck);
+            }
+        }
+        generateCardSets();
+
+        let currentRound = 0;
+        let tournamentHistory = [];
+        let ai1Wins = 0;
+        let ai2Wins = 0;
+        let draws = 0;
+
+        let ai1Strategy = 'offensive';
+        let ai2Strategy = 'offensive';
+
+        let gameState = {};
+
+        // ===================================
+        // GAME LOGIC
+        // ===================================
+
+        const startBtn = document.getElementById('start-btn');
+        startBtn.addEventListener('click', () => {
+            ai1Strategy = document.getElementById('ai1-strategy').value;
+            ai2Strategy = document.getElementById('ai2-strategy').value;
+
+            document.getElementById('ai1-strategy').disabled = true;
+            document.getElementById('ai2-strategy').disabled = true;
+            startBtn.disabled = true;
+
+            currentRound = 0;
+            ai1Wins = 0; ai2Wins = 0; draws = 0;
+            tournamentHistory = [];
+            document.getElementById('results-body').innerHTML = '';
+            updateStats();
+            startRound(1);
+        });
+
+        function startRound(roundNum) {
+            currentRound = roundNum;
+            document.getElementById('round-display').textContent = `Round ${currentRound} / ${TOTAL_ROUNDS}`;
+
+            // Determine Card Sets
+            let setIndex1, setIndex2;
+
+            if (roundNum <= 10) {
+                setIndex1 = roundNum - 1;       // 0..9
+                setIndex2 = roundNum - 1 + 10;  // 10..19
+            } else {
+                setIndex1 = roundNum - 1;       // 10..19
+                setIndex2 = roundNum - 1 - 10;  // 0..9
+            }
+
+            // Initialize Game State
+            gameState = {
+                board: Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null)),
+                players: [
+                    {
+                        id: 0, name: 'AI 1', type: 'ai', colorClass: 'player-0',
+                        deck: [...CARD_SETS[setIndex1]], hand: [], score: 0, cardsPlayed: [],
+                        setIndex: setIndex1 + 1,
+                        aiStrategy: ai1Strategy
+                    },
+                    {
+                        id: 1, name: 'AI 2', type: 'ai', colorClass: 'player-1',
+                        deck: [...CARD_SETS[setIndex2]], hand: [], score: 0, cardsPlayed: [],
+                        setIndex: setIndex2 + 1,
+                        aiStrategy: ai2Strategy
+                    }
+                ],
+                currentPlayerIndex: (roundNum % 2 === 1) ? 0 : 1,
+                isGameOver: false,
+                isFirstMove: true,
+            };
+
+            // Draw initial hands
+            gameState.players.forEach(p => {
+                for (let i = 0; i < INITIAL_HAND_SIZE; i++) {
+                    if (p.deck.length > 0) p.hand.push(p.deck.pop());
+                }
+            });
+
+            renderAll();
+            updateGameStatus(`Round ${roundNum} Start! ${gameState.players[gameState.currentPlayerIndex].name} moves.`);
+
+            setTimeout(triggerAIMove, AI_DELAY);
+        }
+
+        function nextTurn() {
+            if (gameState.isGameOver) return;
+
+            gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % 2;
+            gameState.isFirstMove = false;
+
+            renderAll();
+            setTimeout(triggerAIMove, AI_DELAY);
+        }
+
+        function placeCard(row, col, value, player) {
+            gameState.board[row][col] = { value: value, player: player.id };
+
+            const cardIdx = player.hand.indexOf(value);
+            if (cardIdx > -1) player.hand.splice(cardIdx, 1);
+
+            if (player.deck.length > 0) {
+                player.hand.push(player.deck.pop());
+            }
+        }
+
+        function postMoveChecks(row, col) {
+            calculateScores();
+            renderAll();
+
+            const winner = checkWin(row, col);
+            if (winner) {
+                endRound(winner);
+            } else if (isDraw()) {
+                endRound(null); // Draw
+            } else {
+                nextTurn();
+            }
+        }
+
+        function endRound(winner) {
+            gameState.isGameOver = true;
+
+            const p1 = gameState.players[0];
+            const p2 = gameState.players[1];
+
+            // If draw by board full/no cards, winner is highest score
+            let finalWinner = winner;
+            let resultText = "";
+
+            if (!winner) {
+                if (p1.score > p2.score) finalWinner = p1;
+                else if (p2.score > p1.score) finalWinner = p2;
+                else finalWinner = null; // True draw
+            }
+
+            if (finalWinner) {
+                if (finalWinner.id === 0) ai1Wins++;
+                else ai2Wins++;
+                resultText = finalWinner.name;
+            } else {
+                draws++;
+                resultText = "Draw";
+            }
+
+            // Record History
+            const record = {
+                round: currentRound,
+                ai1Set: p1.setIndex,
+                ai2Set: p2.setIndex,
+                winner: resultText,
+                score: `${p1.score} - ${p2.score}`
+            };
+            tournamentHistory.push(record);
+            addResultRow(record, finalWinner ? finalWinner.id : -1);
+            updateStats();
+
+            if (currentRound < TOTAL_ROUNDS) {
+                setTimeout(() => startRound(currentRound + 1), 500);
+            } else {
+                updateGameStatus("Tournament Finished!");
+                startBtn.disabled = false;
+                document.getElementById('ai1-strategy').disabled = false;
+                document.getElementById('ai2-strategy').disabled = false;
+            }
+        }
+
+        function updateStats() {
+            const calcRound = currentRound === 0 ? 1 : currentRound;
+            document.getElementById('ai1-stats').textContent = `AI 1 Wins: ${ai1Wins} (${((ai1Wins / calcRound) * 100).toFixed(1)}%)`;
+            document.getElementById('ai2-stats').textContent = `AI 2 Wins: ${ai2Wins} (${((ai2Wins / calcRound) * 100).toFixed(1)}%)`;
+            document.getElementById('draw-stats').textContent = `Draws: ${draws}`;
+        }
+
+        function addResultRow(record, winnerId) {
+            const tbody = document.getElementById('results-body');
+            const tr = document.createElement('tr');
+            if (winnerId === 0) tr.className = 'win-row';
+            else if (winnerId === 1) tr.className = 'lose-row';
+            else tr.className = 'draw-row';
+
+            tr.innerHTML = `
+        <td>${record.round}</td>
+        <td>Set ${record.ai1Set}</td>
+        <td>Set ${record.ai2Set}</td>
+        <td>${record.winner}</td>
+        <td>${record.score}</td>
+    `;
+            tbody.appendChild(tr);
+        }
+
+        // ===================================
+        // AI LOGIC
+        // ===================================
+
+        function triggerAIMove() {
+            if (gameState.isGameOver) return;
+            const aiPlayer = gameState.players[gameState.currentPlayerIndex];
+            const bestMove = findBestMoveForAI(aiPlayer);
+
+            if (bestMove) {
+                placeCard(bestMove.row, bestMove.col, bestMove.card, aiPlayer);
+                postMoveChecks(bestMove.row, bestMove.col);
+            } else {
+                console.error("No moves found for AI");
+                gameState.isGameOver = true;
+            }
+        }
+
+        function findBestMoveForAI(aiPlayer) {
+            let bestMove = null;
+            let maxScore = -Infinity;
+            const uniqueCards = [...new Set(aiPlayer.hand)];
+
+            for (const card of uniqueCards) {
+                if (gameState.isFirstMove) {
+                    const centerPos = Math.floor(BOARD_SIZE / 2);
+                    if (validateMove(centerPos, centerPos, card) === null) {
+                        return { row: centerPos, col: centerPos, card: card };
+                    }
+                } else {
+                    for (let r = 0; r < BOARD_SIZE; r++) {
+                        for (let c = 0; c < BOARD_SIZE; c++) {
+                            if (validateMove(r, c, card) === null) {
+                                let score;
+                                switch (aiPlayer.aiStrategy) {
+                                    case 'defensive':
+                                        score = evaluateMoveDefensive(r, c, card, aiPlayer); break;
+                                    case 'offensive':
+                                        score = evaluateMoveOffensive(r, c, card, aiPlayer); break;
+                                    case 'forker':
+                                        score = evaluateMoveForker(r, c, card, aiPlayer); break;
+                                    case 'greedy':
+                                    default:
+                                        score = evaluateMoveGreedy(r, c, card, aiPlayer); break;
+                                }
+                                if (score > maxScore) {
+                                    maxScore = score;
+                                    bestMove = { row: r, col: c, card: card };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        // ===================================
+        // RENDERING
+        // ===================================
+
+        function updateGameStatus(message) {
+            document.getElementById('game-status').textContent = message;
+        }
+
+        function renderAll() {
+            renderBoard();
+            renderPlayerPanels();
+        }
+
+        function renderBoard() {
+            const boardContainer = document.getElementById('board-container');
+            boardContainer.innerHTML = '';
+            const centerPos = Math.floor(BOARD_SIZE / 2);
+
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    if (gameState.isFirstMove && r === centerPos && c === centerPos) {
+                        cell.classList.add('center-point');
+                    }
+
+                    const cardData = gameState.board[r][c];
+                    if (cardData) {
+                        const cardOnBoard = document.createElement('div');
+                        cardOnBoard.classList.add('card-on-board', `${gameState.players[cardData.player].colorClass}-bg`);
+                        cardOnBoard.textContent = cardData.value;
+                        cell.appendChild(cardOnBoard);
+                    }
+                    boardContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function renderPlayerPanels() {
+            const playersCol1 = document.getElementById('players-col-1');
+            const playersCol2 = document.getElementById('players-col-2');
+            playersCol1.innerHTML = '';
+            playersCol2.innerHTML = '';
+
+            gameState.players.forEach((player, index) => {
+                const panel = document.createElement('div');
+                panel.classList.add('player-panel');
+                if (index === gameState.currentPlayerIndex && !gameState.isGameOver) {
+                    panel.classList.add('active');
+                }
+
+                const header = document.createElement('div');
+                header.classList.add('player-header');
+                header.innerHTML = `
+            <div class="player-info">
+                <div class="player-indicator ${player.colorClass}-indicator"></div> 
+                <span>${player.name} (Set ${player.setIndex})</span>
+            </div>
+            <div class="player-score">${player.score}</div>
+        `;
+
+                const handContainer = document.createElement('div');
+                handContainer.classList.add('player-hand');
+                player.hand.forEach(cardValue => {
+                    const cardEl = document.createElement('div');
+                    cardEl.classList.add('card', `${player.colorClass}-bg`);
+                    cardEl.textContent = cardValue;
+                    handContainer.appendChild(cardEl);
+                });
+
+                panel.appendChild(header);
+                panel.appendChild(handContainer);
+
+                if (index === 0) playersCol1.appendChild(panel);
+                else playersCol2.appendChild(panel);
+            });
+        }
+
+        // --- Helper Functions ---
+
+        function validateMove(row, col, cardValue) {
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.value >= cardValue) return "Invalid";
+            if (gameState.isFirstMove) {
+                const centerPos = Math.floor(BOARD_SIZE / 2);
+                if (row !== centerPos || col !== centerPos) return "Invalid";
+            } else {
+                if (!isAdjacentOn(gameState.board, row, col)) return "Invalid";
+            }
+            return null;
+        }
+
+        function isAdjacentOn(board, row, col) {
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const rr = row + dr, cc = col + dc;
+                    if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                    if (board[rr][cc]) return true;
+                }
+            }
+            return false;
+        }
+
+        function checkWin(row, col) {
+            const player = gameState.board[row][col].player;
+            const directions = [{ r: 0, c: 1 }, { r: 1, c: 0 }, { r: 1, c: 1 }, { r: 1, c: -1 }];
+
+            for (const dir of directions) {
+                let count = 1;
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row + i * dir.r; const c = col + i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
+                    count++;
+                }
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row - i * dir.r; const c = col - i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
+                    count++;
+                }
+                if (count >= WIN_LENGTH) return gameState.players[player];
+            }
+            return null;
+        }
+
+        function isDraw() {
+            return gameState.players.every(p => p.hand.length === 0 && p.deck.length === 0);
+        }
+
+        function calculateScores() {
+            gameState.players.forEach(p => p.score = 0);
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    const card = gameState.board[r][c];
+                    if (card) gameState.players[card.player].score += card.value;
+                }
+            }
+        }
+
+        // --- AI STRATEGIES ---
+
+        function cloneBoardWithMove(row, col, card, playerId) {
+            const temp = JSON.parse(JSON.stringify(gameState.board));
+            temp[row][col] = { value: card, player: playerId };
+            return temp;
+        }
+
+        function lineLengthOn(board, row, col, playerId) {
+            const directions = [{ r: 1, c: 0 }, { r: 0, c: 1 }, { r: 1, c: 1 }, { r: 1, c: -1 }];
+            let maxCount = 0;
+            for (const dir of directions) {
+                let count = 1;
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row + i * dir.r; const c = col + i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
+                    count++;
+                }
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row - i * dir.r; const c = col - i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
+                    count++;
+                }
+                if (count > maxCount) maxCount = count;
+            }
+            return maxCount;
+        }
+
+        function immediateWinIf(row, col, card, playerId) {
+            const temp = cloneBoardWithMove(row, col, card, playerId);
+            return lineLengthOn(temp, row, col, playerId) >= WIN_LENGTH;
+        }
+
+        function isValidOn(board, row, col, value) {
+            return isAdjacentOn(board, row, col) && (!board[row][col] || board[row][col].value < value);
+        }
+
+        function opponentThreatIfPlaced(row, col, opponentId) {
+            if (!isValidOn(gameState.board, row, col, 9)) return false;
+            const temp = cloneBoardWithMove(row, col, 9, opponentId);
+            return lineLengthOn(temp, row, col, opponentId) >= WIN_LENGTH;
+        }
+
+        function anyOpponentThreat(row, col, selfId) {
+            for (let i = 0; i < 2; i++) {
+                if (i === selfId) continue;
+                if (opponentThreatIfPlaced(row, col, i)) return true;
+            }
+            return false;
+        }
+
+        function countSelfWinningThreatsOn(boardAfterMove, playerId) {
+            let cnt = 0;
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    if (!isValidOn(boardAfterMove, r, c, 9)) continue;
+                    const temp2 = JSON.parse(JSON.stringify(boardAfterMove));
+                    temp2[r][c] = { value: 9, player: playerId };
+                    if (lineLengthOn(temp2, r, c, playerId) >= WIN_LENGTH) cnt++;
+                }
+            }
+            return cnt;
+        }
+
+        // 1. GREEDY
+        function evaluateMoveGreedy(row, col, card, aiPlayer) {
+            let score = 0;
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value; else score += 1;
+
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 10000;
+
+            for (let i = 0; i < 2; i++) {
+                if (i === aiPlayer.id) continue;
+                if (!gameState.board[row][col]) {
+                    if (opponentThreatIfPlaced(row, col, i)) score += 5000;
+                }
+            }
+
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+            score += (L >= 3 ? 100 : 0) + (L === 2 ? 10 : 0);
+
+            return score;
+        }
+
+        // 2. DEFENSIVE
+        function evaluateMoveDefensive(row, col, card, aiPlayer) {
+            let score = 0;
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += Math.max(2, existingCard.value);
+
+            let blocked = false;
+            for (let i = 0; i < 2; i++) {
+                if (i === aiPlayer.id) continue;
+                if (!gameState.board[row][col] && opponentThreatIfPlaced(row, col, i)) {
+                    score += 9000;
+                    blocked = true;
+                }
+            }
+
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 10000;
+
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+            const neighbors = [-1, 0, 1];
+            let risky = false;
+            for (const dr of neighbors) for (const dc of neighbors) {
+                if (dr === 0 && dc === 0) continue;
+                const rr = row + dr, cc = col + dc;
+                if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                if (!temp[rr][cc]) {
+                    if (anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
+                }
+            }
+            if (risky) score -= 800;
+
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+            score += (L >= 3 ? 120 : 0) + (L === 2 ? 20 : 0) + (blocked ? 150 : 0);
+
+            const center = Math.floor(BOARD_SIZE / 2);
+            score += 5 - (Math.abs(row - center) + Math.abs(col - center)) * 0.5;
+
+            return score;
+        }
+
+        // 3. OFFENSIVE
+        function evaluateMoveOffensive(row, col, card, aiPlayer) {
+            let score = 0;
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value + 3;
+            else score += 2;
+
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 12000;
+
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+
+            if (L === 3) score += 600;
+            else if (L === 2) score += 120;
+            else if (L === 1) score += 10;
+
+            if (existingCard && existingCard.player !== aiPlayer.id) score += Math.min(100, existingCard.value * 8);
+
+            for (let i = 0; i < 2; i++) {
+                if (i === aiPlayer.id) continue;
+                if (!gameState.board[row][col] && opponentThreatIfPlaced(row, col, i)) {
+                    score += 800;
+                }
+            }
+
+            let openAdj = 0;
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const rr = row + dr, cc = col + dc;
+                    if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                    if (!temp[rr][cc]) openAdj++;
+                }
+            }
+            score += openAdj * 5;
+
+            return score;
+        }
+
+        // 4. FORKER
+        function evaluateMoveForker(row, col, card, aiPlayer) {
+            let score = 0;
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 11000;
+
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+            const threats = countSelfWinningThreatsOn(temp, aiPlayer.id);
+            score += threats * 900;
+
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+            if (L === 3) score += 150; else if (L === 2) score += 40; else score += 5;
+
+            let risky = false;
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const rr = row + dr, cc = col + dc;
+                    if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                    if (!temp[rr][cc] && anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
+                }
+            }
+            if (risky) score -= 300;
+
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += Math.min(50, existingCard.value * 3);
+
+            return score;
+        }
+    </script>
+</body>
+
+</html>
