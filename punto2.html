@@ -237,6 +237,85 @@
         .draw-row {
             background-color: #fff3cd;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 900px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .deck-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .deck-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        .deck-item h4 {
+            margin: 0 0 5px 0;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .mini-card-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+        }
+
+        .mini-card {
+            width: 20px;
+            height: 28px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            background: white;
+        }
     </style>
 </head>
 
@@ -273,8 +352,13 @@
             <span id="ai2-stats">AI 2 Wins: 0 (0%)</span>
             <span id="draw-stats">Draws: 0</span>
         </div>
-        <button id="start-btn" style="margin-top:10px; padding:10px 20px; cursor:pointer; font-weight:bold;">Start
-            Tournament</button>
+        <div style="margin-top:15px; display:flex; gap:10px; justify-content:center;">
+            <button id="start-btn" style="padding:10px 20px; cursor:pointer; font-weight:bold;">Start
+                Tournament</button>
+            <button id="view-decks-btn"
+                style="padding:10px 20px; cursor:pointer; font-weight:bold; background-color:#3498db; color:white; border:none; border-radius:4px;">View
+                Decks</button>
+        </div>
     </div>
 
     <div id="main-container">
@@ -300,6 +384,15 @@
         </thead>
         <tbody id="results-body"></tbody>
     </table>
+
+    <!-- Deck Viewer Modal -->
+    <div id="deck-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Card Sets (20 Decks)</h2>
+            <div id="deck-container" class="deck-grid"></div>
+        </div>
+    </div>
 
     <script>
         // ===================================
@@ -358,6 +451,54 @@
             updateStats();
             startRound(1);
         });
+
+        // --- Deck Viewer Logic ---
+        const modal = document.getElementById("deck-modal");
+        const viewDecksBtn = document.getElementById("view-decks-btn");
+        const closeModalSpan = document.getElementsByClassName("close-modal")[0];
+
+        viewDecksBtn.onclick = function () {
+            modal.style.display = "block";
+            renderDecks();
+        }
+
+        closeModalSpan.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function renderDecks() {
+            const container = document.getElementById("deck-container");
+            container.innerHTML = "";
+
+            CARD_SETS.forEach((deck, index) => {
+                const deckDiv = document.createElement("div");
+                deckDiv.className = "deck-item";
+
+                const title = document.createElement("h4");
+                title.textContent = `Set ${index + 1}`;
+                deckDiv.appendChild(title);
+
+                const list = document.createElement("div");
+                list.className = "mini-card-list";
+
+                deck.forEach(val => {
+                    const card = document.createElement("div");
+                    card.className = "mini-card";
+                    card.textContent = val;
+                    card.style.backgroundColor = val >= 7 ? '#ffebee' : (val <= 3 ? '#e8f5e9' : '#fff');
+                    list.appendChild(card);
+                });
+
+                deckDiv.appendChild(list);
+                container.appendChild(deckDiv);
+            });
+        }
 
         function startRound(roundNum) {
             currentRound = roundNum;
