@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@
             --p3-text: white;
             --ai-text: #333;
             --border-radius: 8px;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         body {
@@ -58,9 +59,9 @@
 
         button#start-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
-        
+
         button#back-button {
             padding: 12px 25px;
             font-size: 18px;
@@ -76,7 +77,7 @@
 
         button#back-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
 
         #main-container {
@@ -108,7 +109,7 @@
             border-color: #007bff;
             transform: scale(1.05);
         }
-        
+
         .player-header {
             font-weight: 600;
             font-size: 1.1em;
@@ -159,43 +160,65 @@
             font-weight: 700;
             font-size: 18px;
             user-select: none;
-            border: 2px solid rgba(0,0,0,0.2);
-            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease;
         }
 
-        .card.clickable { cursor: pointer; }
-        .card.clickable:hover { transform: translateY(-4px) scale(1.05); }
+        .card.clickable {
+            cursor: pointer;
+        }
+
+        .card.clickable:hover {
+            transform: translateY(-4px) scale(1.05);
+        }
 
         .card.selected {
             border-color: #2c3e50;
             transform: scale(1.15);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .card-back {
-            background: repeating-linear-gradient(
-                45deg,
-                #7f8c8d,
-                #7f8c8d 5px,
-                #95a5a6 5px,
-                #95a5a6 10px
-            );
+            background: repeating-linear-gradient(45deg,
+                    #7f8c8d,
+                    #7f8c8d 5px,
+                    #95a5a6 5px,
+                    #95a5a6 10px);
         }
 
         /* Warna Player */
-        .player-0-indicator, .player-0-bg { background-color: var(--p1-color); color: var(--p1-text); }
-        .player-1-indicator, .player-1-bg { background-color: var(--p2-color); color: var(--p2-text); }
-        .player-2-indicator, .player-2-bg { background-color: var(--p3-color); color: var(--p3-text); }
-        .player-ai-indicator, .player-ai-bg { background-color: var(--ai-color); color: var(--ai-text); }
-        
+        .player-0-indicator,
+        .player-0-bg {
+            background-color: var(--p1-color);
+            color: var(--p1-text);
+        }
+
+        .player-1-indicator,
+        .player-1-bg {
+            background-color: var(--p2-color);
+            color: var(--p2-text);
+        }
+
+        .player-2-indicator,
+        .player-2-bg {
+            background-color: var(--p3-color);
+            color: var(--p3-text);
+        }
+
+        .player-ai-indicator,
+        .player-ai-bg {
+            background-color: var(--ai-color);
+            color: var(--ai-text);
+        }
+
         #center-panel {
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        
+
         #game-status {
             font-size: 1.3em;
             font-weight: 600;
@@ -244,14 +267,21 @@
         }
 
         @keyframes pulse-border {
-            0%, 100% { border-color: #27ae60; }
-            50% { border-color: #2ecc71; }
+
+            0%,
+            100% {
+                border-color: #27ae60;
+            }
+
+            50% {
+                border-color: #2ecc71;
+            }
         }
 
         .cell.center-point:hover {
             background-color: #d1f2eb;
         }
-        
+
         .cell .card-on-board {
             width: 100%;
             height: 100%;
@@ -263,10 +293,17 @@
             font-size: 20px;
             animation: card-place 0.3s ease-out;
         }
-        
+
         @keyframes card-place {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .first-move-instruction {
@@ -282,8 +319,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         @media (max-width: 1200px) {
@@ -291,14 +335,14 @@
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .players-column {
                 flex-direction: row;
                 width: auto;
                 justify-content: center;
                 flex-wrap: wrap;
             }
-            
+
             .player-panel {
                 width: 220px;
             }
@@ -307,42 +351,77 @@
 
         /* ---- Setup Modal ---- */
         #setup-modal {
-        position: fixed; inset: 0;
-        display: flex; align-items: center; justify-content: center;
-        background: rgba(0,0,0,0.4);
-        z-index: 9999;
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 9999;
         }
 
         .setup-card {
-        width: min(640px, 92vw);
-        background: #fff; border-radius: var(--border-radius);
-        box-shadow: var(--shadow); padding: 18px 20px;
+            width: min(640px, 92vw);
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 18px 20px;
         }
 
         .setup-row {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
         }
 
-        .setup-row label { font-weight: 600; color: #34495e; }
-        .setup-row select, .setup-row input {
-        width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d0d7de;
-        font-family: inherit;
+        .setup-row label {
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .setup-row select,
+        .setup-row input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            font-family: inherit;
         }
 
         #setup-actions {
-        display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 16px;
         }
-        #begin-game-btn, #randomize-btn {
-        padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer;
-        font-weight: 600; box-shadow: var(--shadow);
+
+        #begin-game-btn,
+        #randomize-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow);
         }
-        #begin-game-btn { background: linear-gradient(45deg, #2ecc71, #27ae60); color: #fff; }
-        #randomize-btn { background: #ecf0f1; color: #2c3e50; }
-        .hidden { display: none !important; }
 
+        #begin-game-btn {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: #fff;
+        }
 
+        #randomize-btn {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
+
 <body>
 
     <h1>Punto - Enhanced Edition</h1>
@@ -358,826 +437,887 @@
 
     <!-- STARTING MENU -->
     <div id="setup-modal">
-    <div class="setup-card">
-        <h2 style="margin:0 0 6px 0;color:#34495e">Game Setup</h2>
-        <p style="margin:0 0 14px 0;color:#5d6d7e">Pilih jumlah AI dan model AI yang akan bermain.</p>
+        <div class="setup-card">
+            <h2 style="margin:0 0 6px 0;color:#34495e">Game Setup</h2>
+            <p style="margin:0 0 14px 0;color:#5d6d7e">Pilih jumlah pemain dan tipe pemain (Manusia/AI).</p>
 
-        <div class="setup-row">
-        <label for="ai-count">Jumlah AI</label>
-        <select id="ai-count">
-            <option value="1">1 AI</option>
-            <option value="2">2 AI</option>
-            <option value="3">3 AI</option>
-            <option value="4" selected>4 AI</option>
-        </select>
-        </div>
+            <div class="setup-row">
+                <label for="ai-count">Jumlah Pemain</label>
+                <select id="ai-count">
+                    <option value="2">2 Pemain</option>
+                    <option value="3">3 Pemain</option>
+                    <option value="4" selected>4 Pemain</option>
+                </select>
+            </div>
 
-        <!-- AI Slots -->
-        <div id="ai-slots" style="margin-top:12px"></div>
+            <!-- Player Slots -->
+            <div id="ai-slots" style="margin-top:12px"></div>
 
-        <div id="setup-actions">
-        <button id="randomize-btn" type="button">Randomize</button>
-        <button id="begin-game-btn" type="button">Mulai Permainan</button>
+            <div id="setup-actions">
+                <button id="randomize-btn" type="button">Randomize</button>
+                <button id="begin-game-btn" type="button">Mulai Permainan</button>
+            </div>
         </div>
     </div>
-    </div>
 
-    
+
     <div id="main-container">
         <div class="players-column" id="players-col-1"></div>
         <div class="players-column" id="players-col-2"></div>
     </div>
-    
-<script>
-// ===================================
-// KONFIGURASI DAN STATUS PERMAINAN
-// ===================================
-const BOARD_SIZE = 9;
-const WIN_LENGTH = 4;
-const INITIAL_HAND_SIZE = 3;
 
-// Dynamic player config from setup menu
-let PLAYER_CONFIG = [];
-let TOTAL_PLAYERS = 0;
+    <script>
+        // ===================================
+        // KONFIGURASI DAN STATUS PERMAINAN
+        // ===================================
+        const BOARD_SIZE = 9;
+        const WIN_LENGTH = 4;
+        const INITIAL_HAND_SIZE = 3;
 
-// Available AI strategies
-const AI_MODELS = [
-  { key: 'forker', label: 'Forker' },
-  { key: 'defensive', label: 'Defensive' },
-  { key: 'offensive', label: 'Offensive' },
-  { key: 'greedy', label: 'Greedy' },
-];
+        // Dynamic player config from setup menu
+        let PLAYER_CONFIG = [];
+        let TOTAL_PLAYERS = 0;
 
-// Color classes to cycle through for up to 4 AIs
-const COLOR_CLASSES = ['player-0', 'player-1', 'player-2', 'player-ai'];
+        // Available AI strategies
+        const AI_MODELS = [
+            { key: 'forker', label: 'Forker' },
+            { key: 'defensive', label: 'Defensive' },
+            { key: 'offensive', label: 'Offensive' },
+            { key: 'greedy', label: 'Greedy' },
+        ];
 
-
-let gameState = {};
-let selectedPlayerInfo = { id: null, cardIndex: null, cardValue: null };
-
-// ===================================
-// ELEMEN DOM
-// ===================================
-const boardContainer = document.getElementById('board-container');
-const playersCol1 = document.getElementById('players-col-1');
-const playersCol2 = document.getElementById('players-col-2');
-const gameStatusEl = document.getElementById('game-status');
-const startButton = document.getElementById('start-button');
-const backButton = document.getElementById('back-button');
-
-startButton.addEventListener('click', initializeGame);
-
-backButton.addEventListener('click', () => {
-  //Stop any running game before returning to menu
-  if (gameState) {
-    gameState.isGameOver = true; // Prevents AI or player moves
-  }
-
-  //Cancel any AI timeouts (like from triggerAIMove)
-  if (typeof aiMoveTimeout !== 'undefined') {
-    clearTimeout(aiMoveTimeout);
-  }
-
-  //Also clear any queued timeouts in the event loop
-  const highestTimeoutId = window.setTimeout(() => {});
-  for (let i = 0; i <= highestTimeoutId; i++) {
-    window.clearTimeout(i);
-  }
-
-  //Reset game display
-  boardContainer.innerHTML = '';
-  playersCol1.innerHTML = '';
-  playersCol2.innerHTML = '';
-  gameStatusEl.textContent = 'Silakan pilih jumlah dan jenis AI untuk memulai permainan.';
-
-  //Show setup screen again
-  setupModal.classList.remove('hidden');
-});
+        // Color classes to cycle through for up to 4 AIs
+        const COLOR_CLASSES = ['player-0', 'player-1', 'player-2', 'player-ai'];
 
 
+        let gameState = {};
+        let selectedPlayerInfo = { id: null, cardIndex: null, cardValue: null };
 
+        // ===================================
+        // ELEMEN DOM
+        // ===================================
+        const boardContainer = document.getElementById('board-container');
+        const playersCol1 = document.getElementById('players-col-1');
+        const playersCol2 = document.getElementById('players-col-2');
+        const gameStatusEl = document.getElementById('game-status');
+        const startButton = document.getElementById('start-button');
+        const backButton = document.getElementById('back-button');
 
+        startButton.addEventListener('click', initializeGame);
 
-// ==== Setup Modal Elements ====
-const setupModal = document.getElementById('setup-modal');
-const aiCountSel = document.getElementById('ai-count');
-const aiSlotsContainer = document.getElementById('ai-slots');
-const beginGameBtn = document.getElementById('begin-game-btn');
-const randomizeBtn = document.getElementById('randomize-btn');
+        backButton.addEventListener('click', () => {
+            //Stop any running game before returning to menu
+            if (gameState) {
+                gameState.isGameOver = true; // Prevents AI or player moves
+            }
 
-// Build AI slot rows according to selected count
-function renderAISlots() {
-  const count = parseInt(aiCountSel.value, 10);
-  aiSlotsContainer.innerHTML = '';
-  for (let i = 0; i < count; i++) {
-    const row = document.createElement('div');
-    row.className = 'setup-row';
+            //Cancel any AI timeouts (like from triggerAIMove)
+            if (typeof aiMoveTimeout !== 'undefined') {
+                clearTimeout(aiMoveTimeout);
+            }
 
-    // Name
-    const nameWrap = document.createElement('div');
-    const nameLabel = document.createElement('label');
-    nameLabel.textContent = `AI ${i+1} Name`;
-    const nameInput = document.createElement('input');
-    nameInput.type = 'text';
-    nameInput.value = `AI ${i+1}`;
-    nameInput.id = `ai-name-${i}`;
-    nameWrap.appendChild(nameLabel);
-    nameWrap.appendChild(nameInput);
+            //Also clear any queued timeouts in the event loop
+            const highestTimeoutId = window.setTimeout(() => { });
+            for (let i = 0; i <= highestTimeoutId; i++) {
+                window.clearTimeout(i);
+            }
 
-    // Strategy
-    const stratWrap = document.createElement('div');
-    const stratLabel = document.createElement('label');
-    stratLabel.textContent = `AI ${i+1} Model`;
-    const stratSelect = document.createElement('select');
-    stratSelect.id = `ai-model-${i}`;
-    AI_MODELS.forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m.key; opt.textContent = m.label;
-      stratSelect.appendChild(opt);
-    });
-    // Give each slot a different default for variety
-    stratSelect.selectedIndex = i % AI_MODELS.length;
+            //Reset game display
+            boardContainer.innerHTML = '';
+            playersCol1.innerHTML = '';
+            playersCol2.innerHTML = '';
+            gameStatusEl.textContent = 'Silakan pilih jumlah dan jenis AI untuk memulai permainan.';
 
-    stratWrap.appendChild(stratLabel);
-    stratWrap.appendChild(stratSelect);
-
-    row.appendChild(nameWrap);
-    row.appendChild(stratWrap);
-    aiSlotsContainer.appendChild(row);
-  }
-}
-
-aiCountSel.addEventListener('change', renderAISlots);
-randomizeBtn.addEventListener('click', () => {
-  const count = parseInt(aiCountSel.value, 10);
-  for (let i = 0; i < count; i++) {
-    document.getElementById(`ai-name-${i}`).value = `AI ${i+1}`;
-    const sel = document.getElementById(`ai-model-${i}`);
-    sel.selectedIndex = Math.floor(Math.random() * AI_MODELS.length);
-  }
-});
-
-// Use the menu's selections to build PLAYER_CONFIG and start
-beginGameBtn.addEventListener('click', () => {
-  const count = parseInt(aiCountSel.value, 10);
-  const cfg = [];
-  for (let i = 0; i < count; i++) {
-    const name = document.getElementById(`ai-name-${i}`).value.trim() || `AI ${i+1}`;
-    const model = document.getElementById(`ai-model-${i}`).value;
-    cfg.push({
-      name: `${name} (${AI_MODELS.find(m => m.key === model).label})`,
-      type: 'ai',
-      colorClass: COLOR_CLASSES[i % COLOR_CLASSES.length],
-      aiStrategy: model,
-    });
-  }
-  PLAYER_CONFIG = cfg;
-  TOTAL_PLAYERS = PLAYER_CONFIG.length;
-
-  // Hide setup modal, update status, and init game
-  setupModal.classList.add('hidden');
-  startButton.click(); // reuse your existing handler to initializeGame()
-});
-
-// Build initial slots on load
-renderAISlots();
-
-
-// ===================================
-// FUNGSI UTAMA PERMAINAN
-// ===================================
-
-function initializeGame() {
-    gameState = {
-        board: Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null)),
-        players: [],
-        currentPlayerIndex: Math.floor(Math.random() * TOTAL_PLAYERS), // FIX: Mengacak pemain awal
-        isGameOver: false,
-        turnCount: 0,
-        isFirstMove: true,
-    };
-
-    for (let i = 0; i < TOTAL_PLAYERS; i++) {
-        const deck = createDeck();
-        const hand = [];
-        for (let j = 0; j < INITIAL_HAND_SIZE; j++) {
-            if (deck.length > 0) hand.push(deck.pop());
-        }
-        gameState.players.push({
-            ...PLAYER_CONFIG[i],
-            id: i,
-            deck: deck,
-            hand: hand,
-            score: 0,
-            cardsPlayed: [],
+            //Show setup screen again
+            setupModal.classList.remove('hidden');
         });
-    }
 
-    resetSelection();
-    renderAll();
-    const startingPlayer = gameState.players[gameState.currentPlayerIndex];
-    updateGameStatus(`${startingPlayer.name} memulai! Letakkan kartu pertama di titik tengah.`);
-    
-    // Jika AI yang terpilih untuk memulai, panggil AI
-    if (startingPlayer.type === 'ai' && !gameState.isGameOver) {
-        setTimeout(triggerAIMove, 1500);
-    }
-}
 
-function createDeck() {
-    const deck = [];
-    for (let i = 1; i <= 9; i++) { deck.push(i, i); }
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck;
-}
+        // ==== Setup Modal Elements ====
+        const setupModal = document.getElementById('setup-modal');
+        const aiCountSel = document.getElementById('ai-count');
+        const aiSlotsContainer = document.getElementById('ai-slots');
+        const beginGameBtn = document.getElementById('begin-game-btn');
+        const randomizeBtn = document.getElementById('randomize-btn');
 
-function nextTurn() {
-    if (gameState.isGameOver) return;
-    
-    gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % TOTAL_PLAYERS;
-    gameState.turnCount++;
-    gameState.isFirstMove = false;
-    
-    const currentPlayer = gameState.players[gameState.currentPlayerIndex];
-    updateGameStatus(`Giliran ${currentPlayer.name}.`);
-    renderPlayerPanels();
-    
-    if (currentPlayer.type === 'ai') {
-        setTimeout(triggerAIMove, 1500);
-    }
-}
+        // Build Player slot rows according to selected count
+        function renderPlayerSlots() {
+            const count = parseInt(aiCountSel.value, 10);
+            aiSlotsContainer.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const row = document.createElement('div');
+                row.className = 'setup-row';
+                row.style.gridTemplateColumns = '1.5fr 1fr 1.5fr';
 
-function handleCardClick(playerId, cardIndex, cardValue) {
-    const currentPlayer = gameState.players[gameState.currentPlayerIndex];
-    if (gameState.isGameOver || currentPlayer.id !== playerId || currentPlayer.type === 'ai') return;
+                // Name
+                const nameWrap = document.createElement('div');
+                const nameLabel = document.createElement('label');
+                nameLabel.textContent = `Player ${i + 1}`;
+                const nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.value = `Player ${i + 1}`;
+                nameInput.id = `player-name-${i}`;
+                nameWrap.appendChild(nameLabel);
+                nameWrap.appendChild(nameInput);
 
-    selectedPlayerInfo = { id: playerId, cardIndex: cardIndex, cardValue: cardValue };
-    renderPlayerPanels();
-}
+                // Type (Human/AI)
+                const typeWrap = document.createElement('div');
+                const typeLabel = document.createElement('label');
+                typeLabel.textContent = `Type`;
+                const typeSelect = document.createElement('select');
+                typeSelect.id = `player-type-${i}`;
 
-function handleCellClick(row, col) {
-    const { id, cardValue } = selectedPlayerInfo;
-    const currentPlayer = gameState.players[gameState.currentPlayerIndex];
-    if (gameState.isGameOver || id !== currentPlayer.id || cardValue === null) return;
+                const optHuman = document.createElement('option');
+                optHuman.value = 'human'; optHuman.textContent = 'Human';
+                const optAI = document.createElement('option');
+                optAI.value = 'ai'; optAI.textContent = 'AI';
 
-    const error = validateMove(row, col, cardValue);
-    if (error) {
-        alert(error);
-        return;
-    }
+                // Default: Player 1 Human, others AI
+                if (i === 0) {
+                    optHuman.selected = true;
+                } else {
+                    optAI.selected = true;
+                }
 
-    placeCard(row, col, cardValue, currentPlayer);
-    postMoveChecks(row, col);
-}
+                typeSelect.appendChild(optHuman);
+                typeSelect.appendChild(optAI);
+                typeWrap.appendChild(typeLabel);
+                typeWrap.appendChild(typeSelect);
 
-function placeCard(row, col, value, player) {
-    gameState.board[row][col] = { value: value, player: player.id };
-    
-    player.cardsPlayed.push(value);
-    
-    const cardIdx = player.hand.indexOf(value);
-    if(cardIdx > -1) player.hand.splice(cardIdx, 1);
-    
-    if (player.deck.length > 0) {
-        player.hand.push(player.deck.pop());
-    }
-}
+                // Strategy (Model) - Only for AI
+                const stratWrap = document.createElement('div');
+                const stratLabel = document.createElement('label');
+                stratLabel.textContent = `Strategy`;
+                const stratSelect = document.createElement('select');
+                stratSelect.id = `player-model-${i}`;
+                AI_MODELS.forEach(m => {
+                    const opt = document.createElement('option');
+                    opt.value = m.key; opt.textContent = m.label;
+                    stratSelect.appendChild(opt);
+                });
+                stratSelect.selectedIndex = i % AI_MODELS.length;
 
-function calculateScores() {
-    gameState.players.forEach(p => p.score = 0);
-    
-    for (let r = 0; r < BOARD_SIZE; r++) {
-        for (let c = 0; c < BOARD_SIZE; c++) {
-            const card = gameState.board[r][c];
-            if (card) {
-                gameState.players[card.player].score += card.value;
+                stratWrap.appendChild(stratLabel);
+                stratWrap.appendChild(stratSelect);
+
+                // Visibility toggle handler
+                typeSelect.addEventListener('change', () => {
+                    if (typeSelect.value === 'human') {
+                        stratWrap.style.visibility = 'hidden';
+                    } else {
+                        stratWrap.style.visibility = 'visible';
+                    }
+                });
+                // Trigger once to set initial state
+                typeSelect.dispatchEvent(new Event('change'));
+
+                row.appendChild(nameWrap);
+                row.appendChild(typeWrap);
+                row.appendChild(stratWrap);
+                aiSlotsContainer.appendChild(row);
             }
         }
-    }
-}
 
-function postMoveChecks(row, col){
-    resetSelection();
-    calculateScores();
-    renderAll();
-    
-    const winner = checkWin(row, col);
-    if (winner) {
-        gameState.isGameOver = true;
-        updateGameStatus(`🎉 ${winner.name} MENANG! 🎉 (Skor: ${winner.score})`);
-    } else if (isDraw()) {
-        gameState.isGameOver = true;
-        const highestScore = Math.max(...gameState.players.map(p => p.score));
-        const winners = gameState.players.filter(p => p.score === highestScore);
-        if (winners.length === 1) {
-            updateGameStatus(`🎉 ${winners[0].name} MENANG dengan skor tertinggi: ${highestScore}!`);
-        } else {
-            updateGameStatus(`Permainan Seri! Skor tertinggi: ${highestScore}`);
-        }
-    } else {
-        nextTurn();
-    }
-}
+        aiCountSel.addEventListener('change', renderPlayerSlots);
 
-function resetSelection() {
-    selectedPlayerInfo = { id: null, cardIndex: null, cardValue: null };
-}
+        randomizeBtn.addEventListener('click', () => {
+            const count = parseInt(aiCountSel.value, 10);
+            for (let i = 0; i < count; i++) {
+                // Randomize Type
+                const typeSel = document.getElementById(`player-type-${i}`);
+                const types = ['human', 'ai'];
+                typeSel.value = types[Math.floor(Math.random() * types.length)];
 
-// ===================================
-// FUNGSI VALIDASI
-// ===================================
+                // Randomize Model
+                const modelSel = document.getElementById(`player-model-${i}`);
+                modelSel.selectedIndex = Math.floor(Math.random() * AI_MODELS.length);
 
-function validateMove(row, col, cardValue) {
-    const existingCard = gameState.board[row][col];
-    if (existingCard && existingCard.value >= cardValue) {
-        return "Anda hanya bisa menumpuk dengan kartu bernilai lebih tinggi.";
-    }
-
-    if (gameState.isFirstMove) {
-        // FIX: Hapus pengecekan yang hanya mengizinkan Player 1
-        const centerPos = Math.floor(BOARD_SIZE / 2);
-        if (row !== centerPos || col !== centerPos) {
-            return "Kartu pertama HARUS diletakkan di titik tengah papan (kotak hijau)!";
-        }
-    } else {
-        if (!isAdjacentOn(gameState.board, row, col)) {
-            return isAdjacentOn(gameState.board, row, col);
-        }
-    }
-    return null;
-}
-
-function checkWin(row, col) {
-    const player = gameState.board[row][col].player;
-    const directions = [{ r: 0, c: 1 }, { r: 1, c: 0 }, { r: 1, c: 1 }, { r: 1, c: -1 }];
-
-    for (const dir of directions) {
-        let count = 1;
-        for (let i = 1; i < WIN_LENGTH; i++) {
-            const r = row + i * dir.r; const c = col + i * dir.c;
-            if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
-            count++;
-        }
-        for (let i = 1; i < WIN_LENGTH; i++) {
-            const r = row - i * dir.r; const c = col - i * dir.c;
-            if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
-            count++;
-        }
-        if (count >= WIN_LENGTH) return gameState.players[player];
-    }
-    return null;
-}
-
-function isDraw() {
-    return gameState.players.every(p => p.hand.length === 0 && p.deck.length === 0);
-}
-
-function isAdjacentOn(board, row, col) {
-    for (let dr = -1; dr <= 1; dr++) {
-        for (let dc = -1; dc <= 1; dc++) {
-            if (dr === 0 && dc === 0) continue;
-            const rr = row + dr, cc = col + dc;
-            if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
-            if (board[rr][cc]) return true;
-        }
-    }
-    return false;
-}
-
-function canStackOn(board, row, col, value) {
-    const existing = board[row][col];
-    return !existing || existing.value < value; // value=9 for threat test
-}
-
-function isValidOn(board, row, col, value) {
-    // same validity idea as your real validateMove (adjacent + can stack)
-    // (first-move center rule is not relevant for “next-turn” threat count)
-    return isAdjacentOn(board, row, col) && canStackOn(board, row, col, value);
-}
-
-function countSelfWinningThreatsOn(boardAfterMove, playerId) {
-    let cnt = 0;
-    for (let r = 0; r < BOARD_SIZE; r++) {
-        for (let c = 0; c < BOARD_SIZE; c++) {
-            // assume next turn we could place a '9' there if it's a legal placement
-            if (!isValidOn(boardAfterMove, r, c, 9)) continue;
-            const temp2 = JSON.parse(JSON.stringify(boardAfterMove));
-            temp2[r][c] = { value: 9, player: playerId };
-            if (lineLengthOn(temp2, r, c, playerId) >= WIN_LENGTH) cnt++;
-        }
-    }
-    return cnt;
-}
-
-
-// ===================================
-// LOGIKA AI (KOMPUTER)
-// ===================================
-
-function triggerAIMove() {
-    const aiPlayer = gameState.players[gameState.currentPlayerIndex];
-    if (gameState.isGameOver || aiPlayer.type !== 'ai') return;
-
-    const bestMove = findBestMoveForAI(aiPlayer);
-    if (bestMove) {
-        updateGameStatus(`${aiPlayer.name} sedang berpikir...`);
-        setTimeout(() => {
-            placeCard(bestMove.row, bestMove.col, bestMove.card, aiPlayer);
-            postMoveChecks(bestMove.row, bestMove.col);
-        }, 1000);
-    } else {
-        nextTurn();
-    }
-}
-
-function findBestMoveForAI(aiPlayer) {
-    let bestMove = null;
-    let maxScore = -Infinity;
-
-    const uniqueCards = [...new Set(aiPlayer.hand)];
-    for (const card of uniqueCards) {
-        if (gameState.isFirstMove) {
-            const centerPos = Math.floor(BOARD_SIZE / 2);
-            if (validateMove(centerPos, centerPos, card) === null) {
-                return { row: centerPos, col: centerPos, card: card };
+                // Trigger change to update UI
+                typeSel.dispatchEvent(new Event('change'));
             }
-        } else {
+        });
+
+        // Use the menu's selections to build PLAYER_CONFIG and start
+        beginGameBtn.addEventListener('click', () => {
+            const count = parseInt(aiCountSel.value, 10);
+            const cfg = [];
+            for (let i = 0; i < count; i++) {
+                const nameInput = document.getElementById(`player-name-${i}`);
+                const typeInput = document.getElementById(`player-type-${i}`);
+                const modelInput = document.getElementById(`player-model-${i}`);
+
+                const name = nameInput.value.trim() || `Player ${i + 1}`;
+                const type = typeInput.value;
+                const model = modelInput.value;
+
+                let displayName = name;
+                if (type === 'ai') {
+                    displayName += ` (${AI_MODELS.find(m => m.key === model).label})`;
+                }
+
+                cfg.push({
+                    name: displayName,
+                    type: type,
+                    colorClass: COLOR_CLASSES[i % COLOR_CLASSES.length],
+                    aiStrategy: type === 'ai' ? model : null,
+                });
+            }
+            PLAYER_CONFIG = cfg;
+            TOTAL_PLAYERS = PLAYER_CONFIG.length;
+
+            // Hide setup modal, update status, and init game
+            setupModal.classList.add('hidden');
+            startButton.click(); // reuse your existing handler to initializeGame()
+        });
+
+        // Build initial slots on load
+        renderPlayerSlots();
+
+
+        // ===================================
+        // FUNGSI UTAMA PERMAINAN
+        // ===================================
+
+        function initializeGame() {
+            gameState = {
+                board: Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null)),
+                players: [],
+                currentPlayerIndex: Math.floor(Math.random() * TOTAL_PLAYERS), // FIX: Mengacak pemain awal
+                isGameOver: false,
+                turnCount: 0,
+                isFirstMove: true,
+            };
+
+            for (let i = 0; i < TOTAL_PLAYERS; i++) {
+                const deck = createDeck();
+                const hand = [];
+                for (let j = 0; j < INITIAL_HAND_SIZE; j++) {
+                    if (deck.length > 0) hand.push(deck.pop());
+                }
+                gameState.players.push({
+                    ...PLAYER_CONFIG[i],
+                    id: i,
+                    deck: deck,
+                    hand: hand,
+                    score: 0,
+                    cardsPlayed: [],
+                });
+            }
+
+            resetSelection();
+            renderAll();
+            const startingPlayer = gameState.players[gameState.currentPlayerIndex];
+            updateGameStatus(`${startingPlayer.name} memulai! Letakkan kartu pertama di titik tengah.`);
+
+            // Jika AI yang terpilih untuk memulai, panggil AI
+            if (startingPlayer.type === 'ai' && !gameState.isGameOver) {
+                setTimeout(triggerAIMove, 1500);
+            }
+        }
+
+        function createDeck() {
+            const deck = [];
+            for (let i = 1; i <= 9; i++) { deck.push(i, i); }
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+
+        function nextTurn() {
+            if (gameState.isGameOver) return;
+
+            gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % TOTAL_PLAYERS;
+            gameState.turnCount++;
+            gameState.isFirstMove = false;
+
+            const currentPlayer = gameState.players[gameState.currentPlayerIndex];
+            updateGameStatus(`Giliran ${currentPlayer.name}.`);
+            renderPlayerPanels();
+
+            if (currentPlayer.type === 'ai') {
+                setTimeout(triggerAIMove, 1500);
+            }
+        }
+
+        function handleCardClick(playerId, cardIndex, cardValue) {
+            const currentPlayer = gameState.players[gameState.currentPlayerIndex];
+            if (gameState.isGameOver || currentPlayer.id !== playerId || currentPlayer.type === 'ai') return;
+
+            selectedPlayerInfo = { id: playerId, cardIndex: cardIndex, cardValue: cardValue };
+            renderPlayerPanels();
+        }
+
+        function handleCellClick(row, col) {
+            const { id, cardValue } = selectedPlayerInfo;
+            const currentPlayer = gameState.players[gameState.currentPlayerIndex];
+            if (gameState.isGameOver || id !== currentPlayer.id || cardValue === null) return;
+
+            const error = validateMove(row, col, cardValue);
+            if (error) {
+                alert(error);
+                return;
+            }
+
+            placeCard(row, col, cardValue, currentPlayer);
+            postMoveChecks(row, col);
+        }
+
+        function placeCard(row, col, value, player) {
+            gameState.board[row][col] = { value: value, player: player.id };
+
+            player.cardsPlayed.push(value);
+
+            const cardIdx = player.hand.indexOf(value);
+            if (cardIdx > -1) player.hand.splice(cardIdx, 1);
+
+            if (player.deck.length > 0) {
+                player.hand.push(player.deck.pop());
+            }
+        }
+
+        function calculateScores() {
+            gameState.players.forEach(p => p.score = 0);
+
             for (let r = 0; r < BOARD_SIZE; r++) {
                 for (let c = 0; c < BOARD_SIZE; c++) {
-                    if (validateMove(r, c, card) === null) {
-                        let score;
-                        switch (aiPlayer.aiStrategy) {
-                            case 'defensive':
-                                score = evaluateMoveDefensive(r, c, card, aiPlayer); break;
-                            case 'offensive':
-                                score = evaluateMoveOffensive(r, c, card, aiPlayer); break;
-                            case 'forker':
-                                score = evaluateMoveForker(r, c, card, aiPlayer); break;
-                            case 'greedy':
-                            default:
-                                score = evaluateMoveGreedy(r, c, card, aiPlayer); break;
-                        }
-                        if (score > maxScore) {
-                            maxScore = score;
-                            bestMove = { row: r, col: c, card: card };
-                        }
-                    }   
+                    const card = gameState.board[r][c];
+                    if (card) {
+                        gameState.players[card.player].score += card.value;
+                    }
                 }
             }
         }
-    }
-    return bestMove;
-}
 
-function evaluateMove(row, col, card, aiPlayer) {
-    let score = 0;
-    const existingCard = gameState.board[row][col];
-    if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value;
-    else score += 1;
+        function postMoveChecks(row, col) {
+            resetSelection();
+            calculateScores();
+            renderAll();
 
-    const tempBoard = JSON.parse(JSON.stringify(gameState.board));
-    tempBoard[row][col] = { value: card, player: aiPlayer.id };
-
-    if (getLineLength(tempBoard, row, col, aiPlayer.id) >= WIN_LENGTH) return 10000;
-
-    for (let i = 0; i < TOTAL_PLAYERS; i++) {
-        if (i === aiPlayer.id) continue;
-        const tempOpponentBoard = JSON.parse(JSON.stringify(gameState.board));
-        if (!tempOpponentBoard[row][col]) {
-            tempOpponentBoard[row][col] = { value: 9, player: i };
-            if (getLineLength(tempOpponentBoard, row, col, i) >= WIN_LENGTH) {
-                score += 5000;
-            }
-        }
-    }
-    
-    score += (getLineLength(tempBoard, row, col, aiPlayer.id, 3) === 3) ? 100 : 0;
-    score += (getLineLength(tempBoard, row, col, aiPlayer.id, 2) === 2) ? 10 : 0;
-
-    return score;
-}
-
-// ---------- UTILITAS EVALUASI ----------
-function cloneBoardWithMove(row, col, card, playerId) {
-    const temp = JSON.parse(JSON.stringify(gameState.board));
-    temp[row][col] = { value: card, player: playerId };
-    return temp;
-}
-
-function lineLengthOn(board, row, col, playerId) {
-    const directions = [{ r: 0, c: 1 }, { r: 1, c: 0 }, { r: 1, c: 1 }, { r: 1, c: -1 }];
-    let maxCount = 0;
-    for (const dir of directions) {
-        let count = 1;
-        for (let i = 1; i < WIN_LENGTH; i++) {
-            const r = row + i * dir.r; const c = col + i * dir.c;
-            if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
-            count++;
-        }
-        for (let i = 1; i < WIN_LENGTH; i++) {
-            const r = row - i * dir.r; const c = col - i * dir.c;
-            if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
-            count++;
-        }
-        if (count > maxCount) maxCount = count;
-    }
-    return maxCount;
-}
-
-function immediateWinIf(row, col, card, playerId) {
-    const temp = cloneBoardWithMove(row, col, card, playerId);
-    return lineLengthOn(temp, row, col, playerId) >= WIN_LENGTH;
-}
-
-function opponentThreatIfPlaced(row, col, opponentId) {
-    // Jika lawan taruh kartu maksimum (9) di (row,col), apakah mereka menang?
-    //const temp = cloneBoardWithMove(row, col, 9, opponentId);
-    //return lineLengthOn(temp, row, col, opponentId) >= WIN_LENGTH;
-
-    // NEW:
-    if (!isValidOn(gameState.board, row, col, 9)) return false;
-    const temp = cloneBoardWithMove(row, col, 9, opponentId);
-    return lineLengthOn(temp, row, col, opponentId) >= WIN_LENGTH;
-}
-
-function anyOpponentThreat(row, col, selfId) {
-    for (let i = 0; i < TOTAL_PLAYERS; i++) {
-        if (i === selfId) continue;
-        if (opponentThreatIfPlaced(row, col, i)) return true;
-    }
-    return false;
-}
-
-// ---------- HEURISTIK: GREEDY (ASLI) ----------
-function evaluateMoveGreedy(row, col, card, aiPlayer) {
-    let score = 0;
-    const existingCard = gameState.board[row][col];
-    if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value; else score += 1;
-
-    if (immediateWinIf(row, col, card, aiPlayer.id)) return 10000;
-
-    // Blok kemenangan lawan
-    for (let i = 0; i < TOTAL_PLAYERS; i++) {
-        if (i === aiPlayer.id) continue;
-        if (!gameState.board[row][col]) {
-            if (opponentThreatIfPlaced(row, col, i)) score += 5000;
-        }
-    }
-
-    const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
-    const L = lineLengthOn(temp, row, col, aiPlayer.id);
-    score += (L >= 3 ? 100 : 0) + (L === 2 ? 10 : 0);
-
-    return score;
-}
-
-// ---------- HEURISTIK: DEFENSIVE ----------
-function evaluateMoveDefensive(row, col, card, aiPlayer) {
-    let score = 0;
-    const existingCard = gameState.board[row][col];
-    if (existingCard && existingCard.player !== aiPlayer.id) score += Math.max(2, existingCard.value); // sedikit bonus ambil bidang lawan
-
-    // Prioritas: blok ancaman kemenangan lawan
-    let blocked = false;
-    for (let i = 0; i < TOTAL_PLAYERS; i++) {
-        if (i === aiPlayer.id) continue;
-        if (!gameState.board[row][col] && opponentThreatIfPlaced(row, col, i)) {
-            score += 9000; // jauh lebih tinggi agar memblokir dulu
-            blocked = true;
-        }
-    }
-
-    // Menang langsung tetap prioritas absolut
-    if (immediateWinIf(row, col, card, aiPlayer.id)) return 10000;
-
-    // Hindari memberikan celah menang untuk lawan pada langkah berikutnya (self-trap)
-    // Cek sekitar sel yang dipilih: jika setelah menaruh, ada sel tetangga kosong yang bila diisi lawan bisa menang, penalti
-    const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
-    const neighbors = [-1,0,1];
-    let risky = false;
-    for (const dr of neighbors) for (const dc of neighbors) {
-        if (dr===0 && dc===0) continue;
-        const rr = row+dr, cc = col+dc;
-        if (rr<0||cc<0||rr>=BOARD_SIZE||cc>=BOARD_SIZE) continue;
-        if (!temp[rr][cc]) {
-            if (anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
-        }
-    }
-    if (risky) score -= 800; // cukup besar agar menghindari posisi berbahaya
-
-    // Bangun garis, tapi bobotnya moderat (fokusnya bertahan)
-    const L = lineLengthOn(temp, row, col, aiPlayer.id);
-    score += (L >= 3 ? 120 : 0) + (L === 2 ? 20 : 0) + (blocked ? 150 : 0);
-
-    // Sedikit prefer pusat papan untuk kontrol
-    const center = Math.floor(BOARD_SIZE/2);
-    score += 5 - (Math.abs(row-center) + Math.abs(col-center)) * 0.5;
-
-    return score;
-}
-
-// ---------- HEURISTIK: OFFENSIVE ----------
-function evaluateMoveOffensive(row, col, card, aiPlayer) {
-    let score = 0;
-    const existingCard = gameState.board[row][col];
-    if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value + 3; // agresif: suka ambil bidang lawan
-    else score += 2;
-
-    // Menang langsung sangat diprioritaskan
-    if (immediateWinIf(row, col, card, aiPlayer.id)) return 12000;
-
-    const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
-    const L = lineLengthOn(temp, row, col, aiPlayer.id);
-
-    // Agresif: bobot lebih besar untuk memperpanjang garis
-    if (L === 3) score += 600;
-    else if (L === 2) score += 120;
-    else if (L === 1) score += 10;
-
-    // Serang: prefer menumpuk pada kartu lawan yang besar (bila mungkin)
-    if (existingCard && existingCard.player !== aiPlayer.id) score += Math.min(100, existingCard.value * 8);
-
-    // Masih sedikit memperhitungkan blok tapi bobot lebih kecil daripada greedy/defensive
-    for (let i = 0; i < TOTAL_PLAYERS; i++) {
-        if (i === aiPlayer.id) continue;
-        if (!gameState.board[row][col] && opponentThreatIfPlaced(row, col, i)) {
-            score += 800; // boleh blok, tapi tidak dominan
-        }
-    }
-
-    // Prefer posisi yang membuka banyak tetangga kosong (potensi cabang serangan)
-    let openAdj = 0;
-    for (let dr = -1; dr <= 1; dr++) {
-        for (let dc = -1; dc <= 1; dc++) {
-            if (dr===0 && dc===0) continue;
-            const rr=row+dr, cc=col+dc;
-            if (rr<0||cc<0||rr>=BOARD_SIZE||cc>=BOARD_SIZE) continue;
-            if (!temp[rr][cc]) openAdj++;
-        }
-    }
-    score += openAdj * 5;
-
-    return score;
-}
-
-// ---------- HEURISTIK: FORKER (Threat/Fork Creator) ----------
-function evaluateMoveForker(row, col, card, aiPlayer) {
-    // Tujuan: membuat banyak "ancaman menang berikutnya" (forks).
-    // Skor fokus pada jumlah sel yang akan menjadi kemenangan AI pada giliran selanjutnya.
-    // Tetap heuristik 1-ply, cepat dihitung.
-    let score = 0;
-
-    // Menang langsung tetap prioritas tinggi
-    if (immediateWinIf(row, col, card, aiPlayer.id)) return 11000;
-
-    const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
-
-    // Hitung jumlah sel yang menjadi kemenangan di langkah AI selanjutnya
-    const threats = countSelfWinningThreatsOn(temp, aiPlayer.id); // nilai 0..N
-    score += threats * 900; // bobot tinggi agar memaksimalkan fork multi-ancaman
-
-    // Sedikit bonus jika langkah ini juga memperpanjang rantai saat ini
-    const L = lineLengthOn(temp, row, col, aiPlayer.id);
-    if (L === 3) score += 150; else if (L === 2) score += 40; else score += 5;
-
-    // Penalti ringan jika langkah membuka ancaman menang instan untuk lawan di sekitar
-    let risky = false;
-    for (let dr = -1; dr <= 1; dr++) {
-        for (let dc = -1; dc <= 1; dc++) {
-            if (dr===0 && dc===0) continue;
-            const rr = row + dr, cc = col + dc;
-            if (rr<0||cc<0||rr>=BOARD_SIZE||cc>=BOARD_SIZE) continue;
-            if (!temp[rr][cc] && anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
-        }
-    }
-    if (risky) score -= 300; // lebih toleran risiko dibanding Defensive
-
-    // Bonus kecil jika menumpuk di atas lawan (mengurangi opsi lawan) namun bukan fokus utama
-    const existingCard = gameState.board[row][col];
-    if (existingCard && existingCard.player !== aiPlayer.id) score += Math.min(50, existingCard.value * 3);
-
-    return score;
-}
-
-// ===================================
-// FUNGSI RENDER (VISUAL)
-// ===================================
-
-function renderAll() {
-    renderBoard();
-    renderPlayerPanels();
-}
-
-function renderBoard() {
-    if (!gameState.board) return;
-    boardContainer.innerHTML = '';
-    
-    const centerPos = Math.floor(BOARD_SIZE / 2);
-    
-    for (let r = 0; r < BOARD_SIZE; r++) {
-        for (let c = 0; c < BOARD_SIZE; c++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
-            cell.dataset.row = r;
-            cell.dataset.col = c;
-            cell.addEventListener('click', () => handleCellClick(r, c));
-
-            if (gameState.isFirstMove && r === centerPos && c === centerPos) {
-                cell.classList.add('center-point');
-            }
-
-            const cardData = gameState.board[r][c];
-            if (cardData) {
-                const cardOnBoard = document.createElement('div');
-                cardOnBoard.classList.add('card-on-board', `${PLAYER_CONFIG[cardData.player].colorClass}-bg`);
-                cardOnBoard.textContent = cardData.value;
-                cell.appendChild(cardOnBoard);
-                cell.style.cursor = 'default';
-            }
-            boardContainer.appendChild(cell);
-        }
-    }
-}
-
-function renderPlayerPanels() {
-    if (!gameState.players) return;
-    playersCol1.innerHTML = '';
-    playersCol2.innerHTML = '';
-
-    gameState.players.forEach((player, index) => {
-        const panel = document.createElement('div');
-        panel.classList.add('player-panel');
-        if (index === gameState.currentPlayerIndex && !gameState.isGameOver) {
-            panel.classList.add('active');
-        }
-
-        const header = document.createElement('div');
-        header.classList.add('player-header');
-        
-        const playerInfo = document.createElement('div');
-        playerInfo.classList.add('player-info');
-        playerInfo.innerHTML = `<div class="player-indicator ${player.colorClass}-indicator"></div> <span>${player.name}</span>`;
-        
-        const scoreDisplay = document.createElement('div');
-        scoreDisplay.classList.add('player-score');
-        scoreDisplay.textContent = `${player.score}`;
-        
-        header.appendChild(playerInfo);
-        header.appendChild(scoreDisplay);
-        
-        const deckInfo = document.createElement('div');
-        deckInfo.style.fontSize = '0.8em';
-        deckInfo.style.color = '#7f8c8d';
-        deckInfo.style.marginBottom = '8px';
-        deckInfo.textContent = `Dek: ${player.deck.length} kartu`;
-        
-        const handContainer = document.createElement('div');
-        handContainer.classList.add('player-hand');
-
-        const showCards = (player.type === 'human' && player.id === gameState.currentPlayerIndex);
-
-        player.hand.forEach((cardValue, cardIdx) => {
-            const cardEl = document.createElement('div');
-            cardEl.classList.add('card');
-            
-            if (showCards) {
-                cardEl.classList.add(`${player.colorClass}-bg`, 'clickable');
-                cardEl.textContent = cardValue;
-                if (selectedPlayerInfo.cardIndex === cardIdx && selectedPlayerInfo.id === player.id) {
-                    cardEl.classList.add('selected');
+            const winner = checkWin(row, col);
+            if (winner) {
+                gameState.isGameOver = true;
+                updateGameStatus(`🎉 ${winner.name} MENANG! 🎉 (Skor: ${winner.score})`);
+            } else if (isDraw()) {
+                gameState.isGameOver = true;
+                const highestScore = Math.max(...gameState.players.map(p => p.score));
+                const winners = gameState.players.filter(p => p.score === highestScore);
+                if (winners.length === 1) {
+                    updateGameStatus(`🎉 ${winners[0].name} MENANG dengan skor tertinggi: ${highestScore}!`);
+                } else {
+                    updateGameStatus(`Permainan Seri! Skor tertinggi: ${highestScore}`);
                 }
-                cardEl.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    handleCardClick(player.id, cardIdx, cardValue);
-                });
             } else {
-                cardEl.classList.add('card-back');
+                nextTurn();
             }
-            handContainer.appendChild(cardEl);
-        });
-        
-        panel.appendChild(header);
-        panel.appendChild(deckInfo);
-        panel.appendChild(handContainer);
-        
-        if (index < 2) {
-            playersCol1.appendChild(panel);
-        } else {
-            playersCol2.appendChild(panel);
         }
-    });
-}
 
-function updateGameStatus(message) {
-    gameStatusEl.innerHTML = message;
-}
+        function resetSelection() {
+            selectedPlayerInfo = { id: null, cardIndex: null, cardValue: null };
+        }
 
-// Inisialisasi tampilan awal
-renderBoard();
+        // ===================================
+        // FUNGSI VALIDASI
+        // ===================================
 
-</script>
+        function validateMove(row, col, cardValue) {
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.value >= cardValue) {
+                return "Anda hanya bisa menumpuk dengan kartu bernilai lebih tinggi.";
+            }
+
+            if (gameState.isFirstMove) {
+                // FIX: Hapus pengecekan yang hanya mengizinkan Player 1
+                const centerPos = Math.floor(BOARD_SIZE / 2);
+                if (row !== centerPos || col !== centerPos) {
+                    return "Kartu pertama HARUS diletakkan di titik tengah papan (kotak hijau)!";
+                }
+            } else {
+                if (!isAdjacentOn(gameState.board, row, col)) {
+                    return isAdjacentOn(gameState.board, row, col);
+                }
+            }
+            return null;
+        }
+
+        function checkWin(row, col) {
+            const player = gameState.board[row][col].player;
+            const directions = [{ r: 0, c: 1 }, { r: 1, c: 0 }, { r: 1, c: 1 }, { r: 1, c: -1 }];
+
+            for (const dir of directions) {
+                let count = 1;
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row + i * dir.r; const c = col + i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
+                    count++;
+                }
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row - i * dir.r; const c = col - i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
+                    count++;
+                }
+                if (count >= WIN_LENGTH) return gameState.players[player];
+            }
+            return null;
+        }
+
+        function isDraw() {
+            return gameState.players.every(p => p.hand.length === 0 && p.deck.length === 0);
+        }
+
+        function isAdjacentOn(board, row, col) {
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const rr = row + dr, cc = col + dc;
+                    if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                    if (board[rr][cc]) return true;
+                }
+            }
+            return false;
+        }
+
+        function canStackOn(board, row, col, value) {
+            const existing = board[row][col];
+            return !existing || existing.value < value; // value=9 for threat test
+        }
+
+        function isValidOn(board, row, col, value) {
+            // same validity idea as your real validateMove (adjacent + can stack)
+            // (first-move center rule is not relevant for “next-turn” threat count)
+            return isAdjacentOn(board, row, col) && canStackOn(board, row, col, value);
+        }
+
+        function countSelfWinningThreatsOn(boardAfterMove, playerId) {
+            let cnt = 0;
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    // assume next turn we could place a '9' there if it's a legal placement
+                    if (!isValidOn(boardAfterMove, r, c, 9)) continue;
+                    const temp2 = JSON.parse(JSON.stringify(boardAfterMove));
+                    temp2[r][c] = { value: 9, player: playerId };
+                    if (lineLengthOn(temp2, r, c, playerId) >= WIN_LENGTH) cnt++;
+                }
+            }
+            return cnt;
+        }
+
+
+        // ===================================
+        // LOGIKA AI (KOMPUTER)
+        // ===================================
+
+        function triggerAIMove() {
+            const aiPlayer = gameState.players[gameState.currentPlayerIndex];
+            if (gameState.isGameOver || aiPlayer.type !== 'ai') return;
+
+            const bestMove = findBestMoveForAI(aiPlayer);
+            if (bestMove) {
+                updateGameStatus(`${aiPlayer.name} sedang berpikir...`);
+                setTimeout(() => {
+                    placeCard(bestMove.row, bestMove.col, bestMove.card, aiPlayer);
+                    postMoveChecks(bestMove.row, bestMove.col);
+                }, 1000);
+            } else {
+                nextTurn();
+            }
+        }
+
+        function findBestMoveForAI(aiPlayer) {
+            let bestMove = null;
+            let maxScore = -Infinity;
+
+            const uniqueCards = [...new Set(aiPlayer.hand)];
+
+            for (const card of uniqueCards) {
+                if (gameState.isFirstMove) {
+                    const centerPos = Math.floor(BOARD_SIZE / 2);
+                    if (validateMove(centerPos, centerPos, card) === null) {
+                        return { row: centerPos, col: centerPos, card: card };
+                    }
+                } else {
+                    for (let r = 0; r < BOARD_SIZE; r++) {
+                        for (let c = 0; c < BOARD_SIZE; c++) {
+                            if (validateMove(r, c, card) === null) {
+                                let score;
+                                switch (aiPlayer.aiStrategy) {
+                                    case 'defensive': score = evaluateMoveDefensive(r, c, card, aiPlayer); break;
+                                    case 'offensive': score = evaluateMoveOffensive(r, c, card, aiPlayer); break;
+                                    case 'forker': score = evaluateMoveForker(r, c, card, aiPlayer); break;
+                                    case 'greedy': default: score = evaluateMoveGreedy(r, c, card, aiPlayer); break;
+                                }
+                                if (score > maxScore) {
+                                    maxScore = score;
+                                    bestMove = { row: r, col: c, card: card };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        function evaluateMove(row, col, card, aiPlayer) {
+            let score = 0;
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value;
+            else score += 1;
+
+            const tempBoard = JSON.parse(JSON.stringify(gameState.board));
+            tempBoard[row][col] = { value: card, player: aiPlayer.id };
+
+            if (getLineLength(tempBoard, row, col, aiPlayer.id) >= WIN_LENGTH) return 10000;
+
+            for (let i = 0; i < TOTAL_PLAYERS; i++) {
+                if (i === aiPlayer.id) continue;
+                const tempOpponentBoard = JSON.parse(JSON.stringify(gameState.board));
+                if (!tempOpponentBoard[row][col]) {
+                    tempOpponentBoard[row][col] = { value: 9, player: i };
+                    if (getLineLength(tempOpponentBoard, row, col, i) >= WIN_LENGTH) {
+                        score += 5000;
+                    }
+                }
+            }
+
+            score += (getLineLength(tempBoard, row, col, aiPlayer.id, 3) === 3) ? 100 : 0;
+            score += (getLineLength(tempBoard, row, col, aiPlayer.id, 2) === 2) ? 10 : 0;
+
+            return score;
+        }
+
+        // ---------- UTILITAS EVALUASI ----------
+        function cloneBoardWithMove(row, col, card, playerId) {
+            const temp = JSON.parse(JSON.stringify(gameState.board));
+            temp[row][col] = { value: card, player: playerId };
+            return temp;
+        }
+
+        function lineLengthOn(board, row, col, playerId) {
+            const directions = [{ r: 0, c: 1 }, { r: 1, c: 0 }, { r: 1, c: 1 }, { r: 1, c: -1 }];
+            let maxCount = 0;
+            for (const dir of directions) {
+                let count = 1;
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row + i * dir.r; const c = col + i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
+                    count++;
+                }
+                for (let i = 1; i < WIN_LENGTH; i++) {
+                    const r = row - i * dir.r; const c = col - i * dir.c;
+                    if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
+                    count++;
+                }
+                if (count > maxCount) maxCount = count;
+            }
+            return maxCount;
+        }
+
+        function immediateWinIf(row, col, card, playerId) {
+            const temp = cloneBoardWithMove(row, col, card, playerId);
+            return lineLengthOn(temp, row, col, playerId) >= WIN_LENGTH;
+        }
+
+        function opponentThreatIfPlaced(row, col, opponentId) {
+            // Jika lawan taruh kartu maksimum (9) di (row,col), apakah mereka menang?
+            //const temp = cloneBoardWithMove(row, col, 9, opponentId);
+            //return lineLengthOn(temp, row, col, opponentId) >= WIN_LENGTH;
+
+            // NEW:
+            if (!isValidOn(gameState.board, row, col, 9)) return false;
+            const temp = cloneBoardWithMove(row, col, 9, opponentId);
+            return lineLengthOn(temp, row, col, opponentId) >= WIN_LENGTH;
+        }
+
+        function anyOpponentThreat(row, col, selfId) {
+            for (let i = 0; i < TOTAL_PLAYERS; i++) {
+                if (i === selfId) continue;
+                if (opponentThreatIfPlaced(row, col, i)) return true;
+            }
+            return false;
+        }
+
+        // ---------- HEURISTIK: GREEDY (ASLI) ----------
+        function evaluateMoveGreedy(row, col, card, aiPlayer) {
+            let score = 0;
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value;
+            else score += 1;
+
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 10000;
+
+            // Blok kemenangan lawan
+            for (let i = 0; i < TOTAL_PLAYERS; i++) {
+                if (i === aiPlayer.id) continue;
+                if (!gameState.board[row][col]) {
+                    if (opponentThreatIfPlaced(row, col, i)) score += 5000;
+                }
+            }
+
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+            score += (L >= 3 ? 100 : 0) + (L === 2 ? 10 : 0);
+
+            return score;
+        }
+
+        // ---------- HEURISTIK: DEFENSIVE ----------
+        function evaluateMoveDefensive(row, col, card, aiPlayer) {
+            let score = 0;
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += Math.max(2, existingCard.value); // sedikit bonus ambil bidang lawan
+
+            // Prioritas: blok ancaman kemenangan lawan
+            let blocked = false;
+            for (let i = 0; i < TOTAL_PLAYERS; i++) {
+                if (i === aiPlayer.id) continue;
+                if (!gameState.board[row][col] && opponentThreatIfPlaced(row, col, i)) {
+                    score += 9000; // jauh lebih tinggi agar memblokir dulu
+                    blocked = true;
+                }
+            }
+
+            // Menang langsung tetap prioritas absolut
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 10000;
+
+            // Hindari memberikan celah menang untuk lawan pada langkah berikutnya (self-trap)
+            // Cek sekitar sel yang dipilih: jika setelah menaruh, ada sel tetangga kosong yang bila diisi lawan bisa menang, penalti
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+            const neighbors = [-1, 0, 1];
+            let risky = false;
+            for (const dr of neighbors) for (const dc of neighbors) {
+                if (dr === 0 && dc === 0) continue;
+                const rr = row + dr, cc = col + dc;
+                if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                if (!temp[rr][cc]) {
+                    if (anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
+                }
+            }
+            if (risky) score -= 800; // cukup besar agar menghindari posisi berbahaya
+
+            // Bangun garis, tapi bobotnya moderat (fokusnya bertahan)
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+            score += (L >= 3 ? 120 : 0) + (L === 2 ? 20 : 0) + (blocked ? 150 : 0);
+
+            // Sedikit prefer pusat papan untuk kontrol
+            const center = Math.floor(BOARD_SIZE / 2);
+            score += 5 - (Math.abs(row - center) + Math.abs(col - center)) * 0.5;
+
+            return score;
+        }
+
+        // ---------- HEURISTIK: OFFENSIVE ----------
+        function evaluateMoveOffensive(row, col, card, aiPlayer) {
+            let score = 0;
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value + 3; // agresif: suka ambil bidang lawan
+            else score += 2;
+
+            // Menang langsung sangat diprioritaskan
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 12000;
+
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+
+            // Agresif: bobot lebih besar untuk memperpanjang garis
+            if (L === 3) score += 600;
+            else if (L === 2) score += 120;
+            else if (L === 1) score += 10;
+
+            // Serang: prefer menumpuk pada kartu lawan yang besar (bila mungkin)
+            if (existingCard && existingCard.player !== aiPlayer.id) score += Math.min(100, existingCard.value * 8);
+
+            // Masih sedikit memperhitungkan blok tapi bobot lebih kecil daripada greedy/defensive
+            for (let i = 0; i < TOTAL_PLAYERS; i++) {
+                if (i === aiPlayer.id) continue;
+                if (!gameState.board[row][col] && opponentThreatIfPlaced(row, col, i)) {
+                    score += 800; // boleh blok, tapi tidak dominan
+                }
+            }
+
+            // Prefer posisi yang membuka banyak tetangga kosong (potensi cabang serangan)
+            let openAdj = 0;
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const rr = row + dr, cc = col + dc;
+                    if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                    if (!temp[rr][cc]) openAdj++;
+                }
+            }
+            score += openAdj * 5;
+
+            return score;
+        }
+
+        // ---------- HEURISTIK: FORKER (Threat/Fork Creator) ----------
+        function evaluateMoveForker(row, col, card, aiPlayer) {
+            // Tujuan: membuat banyak "ancaman menang berikutnya" (forks).
+            // Skor fokus pada jumlah sel yang akan menjadi kemenangan AI pada giliran selanjutnya.
+            // Tetap heuristik 1-ply, cepat dihitung.
+            let score = 0;
+
+            // Menang langsung tetap prioritas tinggi
+            if (immediateWinIf(row, col, card, aiPlayer.id)) return 11000;
+
+            const temp = cloneBoardWithMove(row, col, card, aiPlayer.id);
+
+            // Hitung jumlah sel yang menjadi kemenangan di langkah AI selanjutnya
+            const threats = countSelfWinningThreatsOn(temp, aiPlayer.id); // nilai 0..N
+            score += threats * 900; // bobot tinggi agar memaksimalkan fork multi-ancaman
+
+            // Sedikit bonus jika langkah ini juga memperpanjang rantai saat ini
+            const L = lineLengthOn(temp, row, col, aiPlayer.id);
+            if (L === 3) score += 150;
+            else if (L === 2) score += 40;
+            else score += 5;
+
+            // Penalti ringan jika langkah membuka ancaman menang instan untuk lawan di sekitar
+            let risky = false;
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const rr = row + dr, cc = col + dc;
+                    if (rr < 0 || cc < 0 || rr >= BOARD_SIZE || cc >= BOARD_SIZE) continue;
+                    if (!temp[rr][cc] && anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
+                }
+            }
+            if (risky) score -= 300; // lebih toleran risiko dibanding Defensive
+
+            // Bonus kecil jika menumpuk di atas lawan (mengurangi opsi lawan) namun bukan fokus utama
+            const existingCard = gameState.board[row][col];
+            if (existingCard && existingCard.player !== aiPlayer.id) score += Math.min(50, existingCard.value * 3);
+
+            return score;
+        }
+
+        // ===================================
+        // FUNGSI RENDER (VISUAL)
+        // ===================================
+
+        function renderAll() {
+            renderBoard();
+            renderPlayerPanels();
+        }
+
+        function renderBoard() {
+            if (!gameState.board) return;
+            boardContainer.innerHTML = '';
+
+            const centerPos = Math.floor(BOARD_SIZE / 2);
+
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    cell.addEventListener('click', () => handleCellClick(r, c));
+
+                    if (gameState.isFirstMove && r === centerPos && c === centerPos) {
+                        cell.classList.add('center-point');
+                    }
+
+                    const cardData = gameState.board[r][c];
+                    if (cardData) {
+                        const cardOnBoard = document.createElement('div');
+                        cardOnBoard.classList.add('card-on-board', `${PLAYER_CONFIG[cardData.player].colorClass}-bg`);
+                        cardOnBoard.textContent = cardData.value;
+                        cell.appendChild(cardOnBoard);
+                        cell.style.cursor = 'default';
+                    }
+                    boardContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function renderPlayerPanels() {
+            if (!gameState.players) return;
+            playersCol1.innerHTML = '';
+            playersCol2.innerHTML = '';
+
+            gameState.players.forEach((player, index) => {
+                const panel = document.createElement('div');
+                panel.classList.add('player-panel');
+                if (index === gameState.currentPlayerIndex && !gameState.isGameOver) {
+                    panel.classList.add('active');
+                }
+
+                const header = document.createElement('div');
+                header.classList.add('player-header');
+
+                const playerInfo = document.createElement('div');
+                playerInfo.classList.add('player-info');
+                playerInfo.innerHTML = `<div class="player-indicator ${player.colorClass}-indicator"></div> <span>${player.name}</span>`;
+
+                const scoreDisplay = document.createElement('div');
+                scoreDisplay.classList.add('player-score');
+                scoreDisplay.textContent = `${player.score}`;
+
+                header.appendChild(playerInfo);
+                header.appendChild(scoreDisplay);
+
+                const deckInfo = document.createElement('div');
+                deckInfo.style.fontSize = '0.8em';
+                deckInfo.style.color = '#7f8c8d';
+                deckInfo.style.marginBottom = '8px';
+                deckInfo.textContent = `Dek: ${player.deck.length} kartu`;
+
+                const handContainer = document.createElement('div');
+                handContainer.classList.add('player-hand');
+
+                // Show cards if it's this player's turn AND they are human
+                // OR if we want to show everyone's cards (for debugging/hotseat)? 
+                // For now, let's show cards if it's a human player. 
+                // If hotseat (multiple humans), maybe we should always show? 
+                // Or only show current player's cards? 
+                // Let's show all human cards for now to make it easier to play locally.
+                const showCards = (player.type === 'human');
+
+                player.hand.forEach((cardValue, cardIdx) => {
+                    const cardEl = document.createElement('div');
+                    cardEl.classList.add('card');
+
+                    if (showCards) {
+                        cardEl.classList.add(`${player.colorClass}-bg`, 'clickable');
+                        cardEl.textContent = cardValue;
+
+                        if (selectedPlayerInfo.cardIndex === cardIdx && selectedPlayerInfo.id === player.id) {
+                            cardEl.classList.add('selected');
+                        }
+
+                        cardEl.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            handleCardClick(player.id, cardIdx, cardValue);
+                        });
+                    } else {
+                        cardEl.classList.add('card-back');
+                    }
+
+                    handContainer.appendChild(cardEl);
+                });
+
+                panel.appendChild(header);
+                panel.appendChild(deckInfo);
+                panel.appendChild(handContainer);
+
+                if (index < 2) {
+                    playersCol1.appendChild(panel);
+                } else {
+                    playersCol2.appendChild(panel);
+                }
+            });
+        }
+
+        function updateGameStatus(message) {
+            gameStatusEl.innerHTML = message;
+        }
+
+        // Inisialisasi tampilan awal
+        renderBoard();
+
+    </script>
 </body>
+
 </html>
