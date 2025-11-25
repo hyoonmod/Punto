@@ -42,6 +42,10 @@
         #game-controls {
             margin-bottom: 20px;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            /* Added gap for spacing */
         }
 
         button#start-button {
@@ -76,6 +80,25 @@
         }
 
         button#back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* New Tournament Button Style */
+        button#tournament-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            border: none;
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow);
+        }
+
+        button#tournament-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
@@ -431,6 +454,7 @@
         <div id="game-controls">
             <button id="start-button">Restart Game</button>
             <button id="back-button">Return to Menu</button>
+            <button id="tournament-button" onclick="window.location.href='punto2.html'">Go to AI Testing</button>
         </div>
         <div id="board-container"></div>
     </div>

@@ -4,38 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punto AI Tournament (20 Rounds)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Punto AI Testing (20 Rounds)</title>
     <style>
         :root {
             --p1-color: #e74c3c;
-            --p2-color: #2ecc71;
-            --border-radius: 8px;
+            --p2-color: #f1c40f;
+            --p3-color: #3498db;
+            --p4-color: #9b59b6;
+            --ai-color: #2c3e50;
+            --bg-color: #f0f2f5;
+            --border-radius: 12px;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #e9eef2;
-            color: #2c3e50;
-            margin: 0;
-            padding: 20px;
             min-height: 100vh;
         }
 
         h1 {
-            color: #34495e;
-            margin-bottom: 10px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         #tournament-info {
             background: white;
-            padding: 15px;
+            padding: 15px 25px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             margin-bottom: 20px;
@@ -47,61 +48,104 @@
         #tournament-stats {
             display: flex;
             justify-content: space-around;
+            font-size: 1.1em;
+            font-weight: 600;
             margin-top: 10px;
-            font-weight: bold;
+        }
+
+        #tournament-stats span span {
+            color: #2980b9;
+        }
+
+        #game-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
         }
 
         #main-container {
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
             gap: 30px;
-            width: 100%;
-            max-width: 1400px;
+            align-items: flex-start;
+            justify-content: center;
+            margin-bottom: 30px;
         }
 
         .players-column {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 250px;
+            gap: 15px;
+            width: 220px;
         }
 
         .player-panel {
-            padding: 15px;
+            background: white;
+            padding: 12px;
             border-radius: var(--border-radius);
-            background-color: #fff;
             box-shadow: var(--shadow);
-            border: 3px solid transparent;
-            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+            transition: all 0.3s;
         }
 
         .player-panel.active {
-            border-color: #007bff;
             transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            border-left-color: #2ecc71;
         }
 
         .player-header {
-            font-weight: 600;
-            font-size: 1.1em;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #f0f0f0;
-            margin-bottom: 12px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
         }
 
         .player-info {
             display: flex;
             align-items: center;
+            gap: 6px;
+            font-weight: 700;
         }
 
         .player-indicator {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            margin-right: 10px;
         }
 
         .player-score {
@@ -136,7 +180,11 @@
         }
 
         .card-back {
-            background: repeating-linear-gradient(45deg, #7f8c8d, #7f8c8d 5px, #95a5a6 5px, #95a5a6 10px);
+            background: repeating-linear-gradient(45deg,
+                    #7f8c8d,
+                    #7f8c8d 5px,
+                    #95a5a6 5px,
+                    #95a5a6 10px);
         }
 
         .player-0-indicator,
@@ -312,63 +360,73 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 12px;
+            font-size: 0.8em;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
             font-weight: bold;
-            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+
+        .nav-button:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 
 <body>
-
-    <h1>Punto AI Tournament</h1>
+    <a href="punto.html" class="nav-button">Back to Main Game</a>
+    <h1>Punto AI Testing (20 Rounds)</h1>
 
     <div id="tournament-info">
-        <h2 id="round-display">Round 0 / 20</h2>
-
-        <div style="margin-bottom: 15px; display: flex; gap: 20px; justify-content: center;">
-            <div>
-                <label for="ai1-strategy">AI 1 Strategy:</label>
-                <select id="ai1-strategy">
-                    <option value="offensive">Offensive</option>
-                    <option value="defensive">Defensive</option>
-                    <option value="greedy">Greedy</option>
-                    <option value="forker">Forker</option>
-                </select>
-            </div>
-            <div>
-                <label for="ai2-strategy">AI 2 Strategy:</label>
-                <select id="ai2-strategy">
-                    <option value="offensive">Offensive</option>
-                    <option value="defensive">Defensive</option>
-                    <option value="greedy">Greedy</option>
-                    <option value="forker">Forker</option>
-                </select>
-            </div>
-        </div>
-
+        <h3>Testing Stats</h3>
         <div id="tournament-stats">
-            <span id="ai1-stats">AI 1 Wins: 0 (0%)</span>
-            <span id="ai2-stats">AI 2 Wins: 0 (0%)</span>
-            <span id="draw-stats">Draws: 0</span>
+            <span>Round: <span id="round-display">0/20</span></span>
+            <span>AI 1 Wins: <span id="ai1-wins">0</span></span>
+            <span>AI 2 Wins: <span id="ai2-wins">0</span></span>
+            <span>Draws: <span id="draws">0</span></span>
         </div>
-        <div style="margin-top:15px; display:flex; gap:10px; justify-content:center;">
-            <button id="start-btn" style="padding:10px 20px; cursor:pointer; font-weight:bold;">Start
-                Tournament</button>
-            <button id="view-decks-btn"
-                style="padding:10px 20px; cursor:pointer; font-weight:bold; background-color:#3498db; color:white; border:none; border-radius:4px;">View
-                Decks</button>
-        </div>
+        <button id="view-decks-btn" style="margin-top: 15px; background-color: #3498db;">View All 20 Decks</button>
+    </div>
+
+    <div id="game-controls">
+        <label>AI 1 Strategy:
+            <select id="ai1-strategy">
+                <option value="offensive">Offensive</option>
+                <option value="defensive">Defensive</option>
+                <option value="random">Random</option>
+                <option value="greedy">Greedy</option>
+                <option value="forker">Forker</option>
+            </select>
+        </label>
+        <label>AI 2 Strategy:
+            <select id="ai2-strategy">
+                <option value="offensive">Offensive</option>
+                <option value="defensive">Defensive</option>
+                <option value="random">Random</option>
+                <option value="greedy">Greedy</option>
+                <option value="forker">Forker</option>
+            </select>
+        </label>
+        <button id="start-btn">Start Testing</button>
     </div>
 
     <div id="main-container">
         <div class="players-column" id="players-col-1"></div>
-
         <div id="center-panel">
-            <div id="game-status">Ready...</div>
+            <div id="game-status">Ready to start</div>
             <div id="board-container"></div>
         </div>
-
         <div class="players-column" id="players-col-2"></div>
     </div>
 
@@ -406,10 +464,13 @@
 
         // Generate 20 fixed random decks
         const CARD_SETS = [];
+
         function generateCardSets() {
             for (let s = 0; s < 20; s++) {
                 const deck = [];
-                for (let i = 1; i <= 9; i++) { deck.push(i, i); } // 18 cards
+                for (let i = 1; i <= 9; i++) {
+                    deck.push(i, i);
+                }
                 // Shuffle
                 for (let i = deck.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -418,6 +479,7 @@
                 CARD_SETS.push(deck);
             }
         }
+
         generateCardSets();
 
         let currentRound = 0;
@@ -436,6 +498,7 @@
         // ===================================
 
         const startBtn = document.getElementById('start-btn');
+
         startBtn.addEventListener('click', () => {
             ai1Strategy = document.getElementById('ai1-strategy').value;
             ai2Strategy = document.getElementById('ai2-strategy').value;
@@ -445,7 +508,9 @@
             startBtn.disabled = true;
 
             currentRound = 0;
-            ai1Wins = 0; ai2Wins = 0; draws = 0;
+            ai1Wins = 0;
+            ai2Wins = 0;
+            draws = 0;
             tournamentHistory = [];
             document.getElementById('results-body').innerHTML = '';
             updateStats();
@@ -475,18 +540,15 @@
         function renderDecks() {
             const container = document.getElementById("deck-container");
             container.innerHTML = "";
-
             CARD_SETS.forEach((deck, index) => {
                 const deckDiv = document.createElement("div");
                 deckDiv.className = "deck-item";
-
                 const title = document.createElement("h4");
                 title.textContent = `Set ${index + 1}`;
                 deckDiv.appendChild(title);
 
                 const list = document.createElement("div");
                 list.className = "mini-card-list";
-
                 deck.forEach(val => {
                     const card = document.createElement("div");
                     card.className = "mini-card";
@@ -494,7 +556,6 @@
                     card.style.backgroundColor = val >= 7 ? '#ffebee' : (val <= 3 ? '#e8f5e9' : '#fff');
                     list.appendChild(card);
                 });
-
                 deckDiv.appendChild(list);
                 container.appendChild(deckDiv);
             });
@@ -502,11 +563,10 @@
 
         function startRound(roundNum) {
             currentRound = roundNum;
-            document.getElementById('round-display').textContent = `Round ${currentRound} / ${TOTAL_ROUNDS}`;
+            document.getElementById('round-display').textContent = `${currentRound}/${TOTAL_ROUNDS}`;
 
             // Determine Card Sets
             let setIndex1, setIndex2;
-
             if (roundNum <= 10) {
                 setIndex1 = roundNum - 1;       // 0..9
                 setIndex2 = roundNum - 1 + 10;  // 10..19
@@ -552,10 +612,8 @@
 
         function nextTurn() {
             if (gameState.isGameOver) return;
-
             gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % 2;
             gameState.isFirstMove = false;
-
             renderAll();
             setTimeout(triggerAIMove, AI_DELAY);
         }
@@ -587,7 +645,6 @@
 
         function endRound(winner) {
             gameState.isGameOver = true;
-
             const p1 = gameState.players[0];
             const p2 = gameState.players[1];
 
@@ -634,9 +691,9 @@
 
         function updateStats() {
             const calcRound = currentRound === 0 ? 1 : currentRound;
-            document.getElementById('ai1-stats').textContent = `AI 1 Wins: ${ai1Wins} (${((ai1Wins / calcRound) * 100).toFixed(1)}%)`;
-            document.getElementById('ai2-stats').textContent = `AI 2 Wins: ${ai2Wins} (${((ai2Wins / calcRound) * 100).toFixed(1)}%)`;
-            document.getElementById('draw-stats').textContent = `Draws: ${draws}`;
+            document.getElementById('ai1-wins').textContent = `${ai1Wins} (${((ai1Wins / calcRound) * 100).toFixed(1)}%)`;
+            document.getElementById('ai2-wins').textContent = `${ai2Wins} (${((ai2Wins / calcRound) * 100).toFixed(1)}%)`;
+            document.getElementById('draws').textContent = draws;
         }
 
         function addResultRow(record, winnerId) {
@@ -647,12 +704,12 @@
             else tr.className = 'draw-row';
 
             tr.innerHTML = `
-        <td>${record.round}</td>
-        <td>Set ${record.ai1Set}</td>
-        <td>Set ${record.ai2Set}</td>
-        <td>${record.winner}</td>
-        <td>${record.score}</td>
-    `;
+                <td>${record.round}</td>
+                <td>Set ${record.ai1Set}</td>
+                <td>Set ${record.ai2Set}</td>
+                <td>${record.winner}</td>
+                <td>${record.score}</td>
+            `;
             tbody.appendChild(tr);
         }
 
@@ -691,15 +748,10 @@
                             if (validateMove(r, c, card) === null) {
                                 let score;
                                 switch (aiPlayer.aiStrategy) {
-                                    case 'defensive':
-                                        score = evaluateMoveDefensive(r, c, card, aiPlayer); break;
-                                    case 'offensive':
-                                        score = evaluateMoveOffensive(r, c, card, aiPlayer); break;
-                                    case 'forker':
-                                        score = evaluateMoveForker(r, c, card, aiPlayer); break;
-                                    case 'greedy':
-                                    default:
-                                        score = evaluateMoveGreedy(r, c, card, aiPlayer); break;
+                                    case 'defensive': score = evaluateMoveDefensive(r, c, card, aiPlayer); break;
+                                    case 'offensive': score = evaluateMoveOffensive(r, c, card, aiPlayer); break;
+                                    case 'forker': score = evaluateMoveForker(r, c, card, aiPlayer); break;
+                                    case 'greedy': default: score = evaluateMoveGreedy(r, c, card, aiPlayer); break;
                                 }
                                 if (score > maxScore) {
                                     maxScore = score;
@@ -738,7 +790,6 @@
                     if (gameState.isFirstMove && r === centerPos && c === centerPos) {
                         cell.classList.add('center-point');
                     }
-
                     const cardData = gameState.board[r][c];
                     if (cardData) {
                         const cardOnBoard = document.createElement('div');
@@ -767,12 +818,12 @@
                 const header = document.createElement('div');
                 header.classList.add('player-header');
                 header.innerHTML = `
-            <div class="player-info">
-                <div class="player-indicator ${player.colorClass}-indicator"></div> 
-                <span>${player.name} (Set ${player.setIndex})</span>
-            </div>
-            <div class="player-score">${player.score}</div>
-        `;
+                    <div class="player-info">
+                        <div class="player-indicator ${player.colorClass}-indicator"></div>
+                        <span>${player.name} (Set ${player.setIndex})</span>
+                    </div>
+                    <div class="player-score">${player.score}</div>
+                `;
 
                 const handContainer = document.createElement('div');
                 handContainer.classList.add('player-hand');
@@ -796,6 +847,7 @@
         function validateMove(row, col, cardValue) {
             const existingCard = gameState.board[row][col];
             if (existingCard && existingCard.value >= cardValue) return "Invalid";
+
             if (gameState.isFirstMove) {
                 const centerPos = Math.floor(BOARD_SIZE / 2);
                 if (row !== centerPos || col !== centerPos) return "Invalid";
@@ -824,12 +876,14 @@
             for (const dir of directions) {
                 let count = 1;
                 for (let i = 1; i < WIN_LENGTH; i++) {
-                    const r = row + i * dir.r; const c = col + i * dir.c;
+                    const r = row + i * dir.r;
+                    const c = col + i * dir.c;
                     if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
                     count++;
                 }
                 for (let i = 1; i < WIN_LENGTH; i++) {
-                    const r = row - i * dir.r; const c = col - i * dir.c;
+                    const r = row - i * dir.r;
+                    const c = col - i * dir.c;
                     if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || gameState.board[r][c]?.player !== player) break;
                     count++;
                 }
@@ -866,12 +920,14 @@
             for (const dir of directions) {
                 let count = 1;
                 for (let i = 1; i < WIN_LENGTH; i++) {
-                    const r = row + i * dir.r; const c = col + i * dir.c;
+                    const r = row + i * dir.r;
+                    const c = col + i * dir.c;
                     if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
                     count++;
                 }
                 for (let i = 1; i < WIN_LENGTH; i++) {
-                    const r = row - i * dir.r; const c = col - i * dir.c;
+                    const r = row - i * dir.r;
+                    const c = col - i * dir.c;
                     if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE || board[r][c]?.player !== playerId) break;
                     count++;
                 }
@@ -920,7 +976,8 @@
         function evaluateMoveGreedy(row, col, card, aiPlayer) {
             let score = 0;
             const existingCard = gameState.board[row][col];
-            if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value; else score += 1;
+            if (existingCard && existingCard.player !== aiPlayer.id) score += existingCard.value;
+            else score += 1;
 
             if (immediateWinIf(row, col, card, aiPlayer.id)) return 10000;
 
@@ -966,6 +1023,7 @@
                     if (anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
                 }
             }
+
             if (risky) score -= 800;
 
             const L = lineLengthOn(temp, row, col, aiPlayer.id);
@@ -1026,7 +1084,9 @@
             score += threats * 900;
 
             const L = lineLengthOn(temp, row, col, aiPlayer.id);
-            if (L === 3) score += 150; else if (L === 2) score += 40; else score += 5;
+            if (L === 3) score += 150;
+            else if (L === 2) score += 40;
+            else score += 5;
 
             let risky = false;
             for (let dr = -1; dr <= 1; dr++) {
@@ -1037,6 +1097,7 @@
                     if (!temp[rr][cc] && anyOpponentThreat(rr, cc, aiPlayer.id)) risky = true;
                 }
             }
+
             if (risky) score -= 300;
 
             const existingCard = gameState.board[row][col];
